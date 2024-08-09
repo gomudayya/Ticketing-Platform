@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmailDto {
+public class EmailRequest {
 
     @Email
     @NotBlank

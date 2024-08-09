@@ -48,5 +48,6 @@ public class UserEmailService {
         }
 
         joinVerify.setVerified();
+        joinVerifyRepository.save(joinVerify);
     }
 }
