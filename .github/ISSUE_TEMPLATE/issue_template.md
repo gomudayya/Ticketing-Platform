@@ -1,5 +1,5 @@
 ---
-name: 일반
+name: 일반이슈
 about: ㅎㅇㅌ ㅎㅇㅌ 집중해서 끝내고 쉬자
 title: ''
 labels: ''
