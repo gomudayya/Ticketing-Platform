@@ -1,6 +1,6 @@
 ---
-name: General Issue
-about: Create a general issue with tasks and additional information
+name: 일반
+about: ㅎㅇㅌ ㅎㅇㅌ 집중해서 끝내고 쉬자
 title: ''
 labels: ''
 assignees: ''
