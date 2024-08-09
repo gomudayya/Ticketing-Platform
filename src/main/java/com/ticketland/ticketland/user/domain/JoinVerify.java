@@ -17,7 +17,7 @@ public class JoinVerify {
     private boolean isVerified = false;
 
     @TimeToLive
-    private long ttl = 900;
+    private long ttl = 3600;
 
     public JoinVerify(String email, int code) {
         this.email = email;
