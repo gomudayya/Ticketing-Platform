@@ -7,7 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.persister.collection.mutation.UpdateRowsCoordinator;
+import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Base64;
 
 @Entity
 @Getter
@@ -24,7 +27,7 @@ public class User extends BaseTimeEntity {
     private boolean isDeleted;
 
     @Builder
-    public User(String email, String password, String name, String phoneNumber) {
+    private User(String email, String password, String name, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -33,4 +36,11 @@ public class User extends BaseTimeEntity {
     }
 
     protected User(){}
+
+    public void encryptUser(PasswordEncoder passwordEncoder, AesBytesEncryptor aesBytesEncryptor) {
+        password = passwordEncoder.encode(this.password);
+        this.email = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.email.getBytes()));
+        this.name = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.name.getBytes()));
+        this.phoneNumber = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.phoneNumber.getBytes()));
+    }
 }
