@@ -2,6 +2,7 @@ package com.ticketland.ticketland.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ticketland.ticketland.auth.filter.JwtAuthenticationFilter;
+import com.ticketland.ticketland.auth.filter.JwtAuthorizationFilter;
 import com.ticketland.ticketland.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
-
     private final ObjectMapper objectMapper;
     private final JwtUtil jwtUtil;
     @Bean
@@ -40,12 +40,18 @@ public class SecurityConfig {
         http.logout(AbstractHttpConfigurer::disable);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         return new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), objectMapper, jwtUtil);
+    }
+
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
+        return new JwtAuthorizationFilter(jwtUtil);
     }
 
     @Bean

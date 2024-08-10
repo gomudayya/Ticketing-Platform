@@ -22,14 +22,14 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String USER_ROLE_CLAIM = "userRole";
-    public static final String USER_ID_CLAIM = "userId";
     public static final String BEARER_PREFIX = "Bearer ";
+    private static final String USER_ROLE_CLAIM = "userRole";
+    private static final String USER_ID_CLAIM = "userId";
     private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
 
-    @Value("${jwt-secret-key}") // Base64 Encode 한 SecretKey
-    private String secretKey;
     private Key key;
+    @Value("${jwt-secret-key}") //
+    private String secretKey;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     @PostConstruct
@@ -49,16 +49,6 @@ public class JwtUtil {
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
-    }
-
-
-    // JWT 토큰 substring
-    public String substringToken(String tokenValue) {
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
-        }
-        log.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
     }
 
     // 토큰 검증

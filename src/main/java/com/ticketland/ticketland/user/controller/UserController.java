@@ -3,11 +3,15 @@ package com.ticketland.ticketland.user.controller;
 import com.ticketland.ticketland.user.dto.EmailRequest;
 import com.ticketland.ticketland.user.dto.EmailVerifyRequest;
 import com.ticketland.ticketland.user.dto.JoinRequest;
+import com.ticketland.ticketland.user.dto.UserInfoResponse;
 import com.ticketland.ticketland.user.service.UserEmailService;
 import com.ticketland.ticketland.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +38,13 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody JoinRequest requestDto) {
+    public ResponseEntity<UserInfoResponse> join(@RequestBody JoinRequest requestDto) {
         return ResponseEntity.ok(userService.join(requestDto));
+    }
+
+    @GetMapping
+    @Secured("ROLE_USER")
+    public ResponseEntity<UserInfoResponse> getMemberByAccessToken(@AuthenticationPrincipal Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 }

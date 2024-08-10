@@ -13,8 +13,9 @@ public enum ErrorCode {
 
     INVALID_VERIFY_CODE(400, "인증번호가 일치하지 않습니다."),
 
-    EMAIL_NOT_VERIFIED(400, "이메일 인증이 되어있지 않습니다.")
+    EMAIL_NOT_VERIFIED(400, "이메일 인증이 되어있지 않습니다."),
 
+    USER_NOT_FOUND(404, "해당 유저를 찾을 수 없습니다.")
     ;
 
     private final int statusCode;

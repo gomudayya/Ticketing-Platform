@@ -4,7 +4,6 @@ import com.ticketland.ticketland.user.constant.UserRole;
 import com.ticketland.ticketland.user.domain.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -21,9 +20,8 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         UserRole userRole = user.getUserRole();
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.getAuthority());
 
-        return List.of(simpleGrantedAuthority);
+        return List.of(userRole::getAuthority);
     }
 
     @Override

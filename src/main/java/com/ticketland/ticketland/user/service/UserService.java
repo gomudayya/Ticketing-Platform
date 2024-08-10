@@ -7,6 +7,7 @@ import com.ticketland.ticketland.user.domain.User;
 import com.ticketland.ticketland.user.dto.JoinRequest;
 import com.ticketland.ticketland.user.dto.UserInfoResponse;
 import com.ticketland.ticketland.user.exception.EmailNotVerifiedException;
+import com.ticketland.ticketland.user.exception.UserNotFoundException;
 import com.ticketland.ticketland.user.exception.VerifyExpiredException;
 import com.ticketland.ticketland.user.repository.JoinVerificationRepository;
 import com.ticketland.ticketland.user.repository.UserRepository;
@@ -41,6 +42,13 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+        return UserInfoResponse.from(user);
+    }
+
+    public UserInfoResponse findById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
         return UserInfoResponse.from(user);
     }
 }
