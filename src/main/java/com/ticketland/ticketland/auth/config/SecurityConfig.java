@@ -3,6 +3,7 @@ package com.ticketland.ticketland.auth.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ticketland.ticketland.auth.filter.JwtAuthenticationFilter;
 import com.ticketland.ticketland.auth.filter.JwtAuthorizationFilter;
+import com.ticketland.ticketland.auth.handler.CustomAuthenticationEntryPoint;
 import com.ticketland.ticketland.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,7 @@ public class SecurityConfig {
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
+        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint()));
         return http.build();
     }
 
@@ -61,5 +63,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomAuthenticationEntryPoint customAuthenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint(objectMapper);
     }
 }

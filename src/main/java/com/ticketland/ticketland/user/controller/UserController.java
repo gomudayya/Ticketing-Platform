@@ -1,5 +1,6 @@
 package com.ticketland.ticketland.user.controller;
 
+import com.ticketland.ticketland.user.constant.UserRole;
 import com.ticketland.ticketland.user.dto.EmailRequest;
 import com.ticketland.ticketland.user.dto.EmailVerifyRequest;
 import com.ticketland.ticketland.user.dto.JoinRequest;
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping
-    @Secured("ROLE_USER")
+    @Secured(UserRole.Authority.USER)
     public ResponseEntity<UserInfoResponse> getMemberByAccessToken(@AuthenticationPrincipal Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
