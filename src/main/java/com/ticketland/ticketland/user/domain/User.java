@@ -1,16 +1,14 @@
 package com.ticketland.ticketland.user.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
+import com.ticketland.ticketland.global.util.AesUtil;
+import com.ticketland.ticketland.user.constant.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Base64;
 
 @Entity
 @Getter
@@ -25,22 +23,31 @@ public class User extends BaseTimeEntity {
     private String name;
     private String phoneNumber;
     private boolean isDeleted;
+    private UserRole userRole;
 
     @Builder
-    private User(String email, String password, String name, String phoneNumber) {
+    private User(String email, String password, String name, String phoneNumber, UserRole userRole) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.isDeleted = false;
+        this.userRole = userRole;
     }
 
-    protected User(){}
-
-    public void encryptUser(PasswordEncoder passwordEncoder, AesBytesEncryptor aesBytesEncryptor) {
-        password = passwordEncoder.encode(this.password);
-        this.email = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.email.getBytes()));
-        this.name = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.name.getBytes()));
-        this.phoneNumber = Base64.getEncoder().encodeToString(aesBytesEncryptor.encrypt(this.phoneNumber.getBytes()));
+    protected User() {
     }
+
+    public String getEmail() {
+        return AesUtil.decode(email);
+    }
+
+    public String getName() {
+        return AesUtil.decode(name);
+    }
+
+    public String getPhoneNumber() {
+        return AesUtil.decode(phoneNumber);
+    }
+
 }

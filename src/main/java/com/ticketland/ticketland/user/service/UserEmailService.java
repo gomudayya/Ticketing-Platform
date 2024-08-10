@@ -1,9 +1,9 @@
 package com.ticketland.ticketland.user.service;
 
-import com.ticketland.ticketland.user.domain.JoinVerify;
+import com.ticketland.ticketland.user.domain.JoinVerification;
 import com.ticketland.ticketland.user.exception.InvalidVerifyException;
 import com.ticketland.ticketland.user.exception.VerifyExpiredException;
-import com.ticketland.ticketland.user.repository.JoinVerifyRepository;
+import com.ticketland.ticketland.user.repository.JoinVerificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
@@ -21,7 +21,7 @@ public class UserEmailService {
 
     private final MailSender mailSender;
 
-    private final JoinVerifyRepository joinVerifyRepository;
+    private final JoinVerificationRepository joinVerificationRepository;
 
 
     public void sendVerificationCode(String email) {
@@ -35,19 +35,19 @@ public class UserEmailService {
 
         mailSender.send(mail);
 
-        JoinVerify joinVerify = new JoinVerify(email, codeNumber);
-        joinVerifyRepository.save(joinVerify);
+        JoinVerification joinVerification = new JoinVerification(email, codeNumber);
+        joinVerificationRepository.save(joinVerification);
     }
 
     public void verifyEmail(String email, int verifyCode) {
-        JoinVerify joinVerify = joinVerifyRepository.findById(email)
+        JoinVerification joinVerification = joinVerificationRepository.findById(email)
                 .orElseThrow(VerifyExpiredException::new);
 
-        if (!joinVerify.codeEquals(verifyCode)) {
+        if (!joinVerification.codeEquals(verifyCode)) {
             throw new InvalidVerifyException(); // 인증번호가 안맞으면 예외
         }
 
-        joinVerify.setVerified();
-        joinVerifyRepository.save(joinVerify);
+        joinVerification.setVerified();
+        joinVerificationRepository.save(joinVerification);
     }
 }

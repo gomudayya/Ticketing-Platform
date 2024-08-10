@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.TimeToLive;
 
 @Getter
 @RedisHash(value = "verify_code")
-public class JoinVerify {
+public class JoinVerification {
 
     @Id
     private String email;
@@ -19,7 +19,7 @@ public class JoinVerify {
     @TimeToLive
     private long ttl = 3600;
 
-    public JoinVerify(String email, int code) {
+    public JoinVerification(String email, int code) {
         this.email = email;
         this.code = code;
     }
