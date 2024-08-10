@@ -1,6 +1,7 @@
 package com.ticketland.ticketland.user.service;
 
 import com.ticketland.ticketland.global.util.AesUtil;
+import com.ticketland.ticketland.user.constant.UserRole;
 import com.ticketland.ticketland.user.domain.JoinVerify;
 import com.ticketland.ticketland.user.domain.User;
 import com.ticketland.ticketland.user.dto.JoinRequest;
@@ -36,6 +37,7 @@ public class UserService {
                 .password(passwordEncoder.encode(joinRequest.getPassword()))
                 .name(AesUtil.encode(joinRequest.getName()))
                 .phoneNumber(AesUtil.encode(joinRequest.getPhoneNumber()))
+                .userRole(UserRole.USER)
                 .build();
 
         userRepository.save(user);

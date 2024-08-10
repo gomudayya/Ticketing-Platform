@@ -2,6 +2,7 @@ package com.ticketland.ticketland.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ticketland.ticketland.auth.filter.JwtAuthenticationFilter;
+import com.ticketland.ticketland.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
 
     private final ObjectMapper objectMapper;
+    private final JwtUtil jwtUtil;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //http.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource)); 나중에 cors 설정 해줘야함.
@@ -43,7 +45,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        return new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), objectMapper);
+        return new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), objectMapper, jwtUtil);
     }
 
     @Bean
