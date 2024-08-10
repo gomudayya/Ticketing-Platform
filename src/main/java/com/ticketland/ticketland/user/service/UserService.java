@@ -2,13 +2,13 @@ package com.ticketland.ticketland.user.service;
 
 import com.ticketland.ticketland.global.util.AesUtil;
 import com.ticketland.ticketland.user.constant.UserRole;
-import com.ticketland.ticketland.user.domain.JoinVerify;
+import com.ticketland.ticketland.user.domain.JoinVerification;
 import com.ticketland.ticketland.user.domain.User;
 import com.ticketland.ticketland.user.dto.JoinRequest;
 import com.ticketland.ticketland.user.dto.UserInfoResponse;
 import com.ticketland.ticketland.user.exception.EmailNotVerifiedException;
 import com.ticketland.ticketland.user.exception.VerifyExpiredException;
-import com.ticketland.ticketland.user.repository.JoinVerifyRepository;
+import com.ticketland.ticketland.user.repository.JoinVerificationRepository;
 import com.ticketland.ticketland.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,15 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final JoinVerifyRepository joinVerifyRepository;
+    private final JoinVerificationRepository joinVerificationRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserInfoResponse join(JoinRequest joinRequest) {
-        JoinVerify joinVerify = joinVerifyRepository.findById(joinRequest.getEmail())
+        JoinVerification joinVerification = joinVerificationRepository.findById(joinRequest.getEmail())
                 .orElseThrow(VerifyExpiredException::new);
 
-        if (!joinVerify.isVerified()) {
+        if (!joinVerification.isVerified()) {
             throw new EmailNotVerifiedException(); // 이메일 인증이 되어있지 않으면 예외 발생
         }
 
