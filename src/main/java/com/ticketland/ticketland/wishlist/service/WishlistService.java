@@ -7,9 +7,12 @@ import com.ticketland.ticketland.show.repository.ShowRepository;
 import com.ticketland.ticketland.user.domain.User;
 import com.ticketland.ticketland.user.repository.UserRepository;
 import com.ticketland.ticketland.wishlist.domain.Wishlist;
+import com.ticketland.ticketland.wishlist.dto.WishlistPageResponse;
 import com.ticketland.ticketland.wishlist.dto.WishlistResponse;
 import com.ticketland.ticketland.wishlist.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,5 +39,10 @@ public class WishlistService {
     public void deleteWishlist(Long wishlistId) {
         Wishlist wishlist = wishlistRepository.findById(wishlistId).orElseThrow(() -> new NotFoundException("위시리스트"));
         wishlistRepository.delete(wishlist);
+    }
+
+    public WishlistPageResponse findWishlist(Long userId, Pageable pageable) {
+        Page<Wishlist> wishlistPage = wishlistRepository.findWishlistByUserId(userId, pageable);
+        return WishlistPageResponse.from(wishlistPage);
     }
 }

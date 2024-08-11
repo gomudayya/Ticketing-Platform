@@ -15,15 +15,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class WishlistResponse {
     private Long wishlistId;
-    private Long userId;
     private ShowSingleResponse show;
 
     public static WishlistResponse from(Wishlist wishlist) {
         Show findShow = wishlist.getShow();
-        User user = wishlist.getUser();
 
         return builder()
-                .userId(user.getId())
                 .wishlistId(wishlist.getId())
                 .show(ShowSingleResponse.from(findShow))
                 .build();
