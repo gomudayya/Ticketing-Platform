@@ -1,8 +1,8 @@
 package com.ticketland.ticketland.auth.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ticketland.ticketland.global.exception.ErrorCode;
-import com.ticketland.ticketland.global.exception.ExceptionResponse;
+import com.ticketland.ticketland.global.exception.core.ErrorCode;
+import com.ticketland.ticketland.global.exception.core.ExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

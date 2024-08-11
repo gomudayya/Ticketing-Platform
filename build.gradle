@@ -47,10 +47,21 @@ dependencies {
 	//mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	//querydsl
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	//p6spy (sql log)
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+//querydsl Q타입 비우기 (clean)
+clean {
+	delete file('src/main/generated')
 }

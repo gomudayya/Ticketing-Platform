@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.global.exception;
+package com.ticketland.ticketland.global.exception.core;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +37,9 @@ public class GlobalExceptionHandler {
         printExceptionLog(e);
 
         ErrorCode errorCode = e.getErrorCode();
+        if (!e.getMessage().equals(errorCode.getMsg())) {
+            errorCode.changeMsg(e.getMessage()); // 에러코드 메시지와 예외 메시지가 다를경우에는 예외 메시지가 우선한다.
+        }
 
         return ResponseEntity.status(errorCode.getStatusCode())
                 .body(ExceptionResponse.of(errorCode));

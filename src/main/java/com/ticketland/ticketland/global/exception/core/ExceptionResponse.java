@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.global.exception;
+package com.ticketland.ticketland.global.exception.core;
 
 import lombok.Getter;
 
