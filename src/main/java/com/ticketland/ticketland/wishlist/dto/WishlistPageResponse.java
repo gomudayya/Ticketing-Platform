@@ -14,9 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class WishlistPageResponse {
-
+    
     private Integer currentPage;
     private Integer lastPage;
+    private Integer totalContent;
     private Integer pageSize;
     private List<WishlistResponse> content;
 
@@ -29,6 +30,7 @@ public class WishlistPageResponse {
                 .currentPage(wishlistPage.getNumber())
                 .lastPage(wishlistPage.getTotalPages() - 1)
                 .pageSize(wishlistPage.getSize())
+                .totalContent(wishlistPage.getTotalPages())
                 .content(content)
                 .build();
     }
