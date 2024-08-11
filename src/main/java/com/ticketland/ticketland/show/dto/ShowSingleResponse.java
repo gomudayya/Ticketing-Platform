@@ -1,6 +1,6 @@
-package com.ticketland.ticketland.performance.dto;
+package com.ticketland.ticketland.show.dto;
 
-import com.ticketland.ticketland.performance.domain.Show;
+import com.ticketland.ticketland.show.domain.Show;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class ShowSingleResponse {
                 .title(show.getTitle())
                 .descriptionImage(show.getDescriptionImage())
                 .ticketingTime(show.getTicketingTime())
-                .startDate(show.getStartDate())
+                .startDate(show.getStartTime())
                 .duration(show.getDuration())
                 .build();
     }

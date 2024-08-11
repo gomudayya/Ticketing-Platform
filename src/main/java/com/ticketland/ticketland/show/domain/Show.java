@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.performance.domain;
+package com.ticketland.ticketland.show.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;
@@ -22,7 +22,7 @@ public class Show extends BaseTimeEntity {
     private String title;
     private String descriptionImage;
     private LocalDateTime ticketingTime;
-    private LocalDateTime startDate;
+    private LocalDateTime startTime;
     private Integer duration; // 공연시간 (분)
     private boolean isDeleted;
 }

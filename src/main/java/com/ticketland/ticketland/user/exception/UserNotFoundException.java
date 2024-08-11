@@ -1,7 +1,7 @@
 package com.ticketland.ticketland.user.exception;
 
-import com.ticketland.ticketland.global.exception.CustomException;
-import com.ticketland.ticketland.global.exception.ErrorCode;
+import com.ticketland.ticketland.global.exception.core.CustomException;
+import com.ticketland.ticketland.global.exception.core.ErrorCode;
 
 public class UserNotFoundException extends CustomException {
 
