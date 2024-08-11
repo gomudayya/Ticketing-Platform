@@ -1,6 +1,6 @@
 package com.ticketland.ticketland.show.controller;
 
-import com.ticketland.ticketland.show.dto.ShowPageResponse;
+import com.ticketland.ticketland.show.dto.ShowSliceResponse;
 import com.ticketland.ticketland.show.dto.ShowSearchCondition;
 import com.ticketland.ticketland.show.dto.ShowSingleResponse;
 import com.ticketland.ticketland.show.service.ShowService;
@@ -27,7 +27,7 @@ public class ShowController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ShowPageResponse> findShow(@ModelAttribute @Valid ShowSearchCondition showSearchCondition, Pageable pageable) {
+    public ResponseEntity<ShowSliceResponse> findShow(@ModelAttribute @Valid ShowSearchCondition showSearchCondition, Pageable pageable) {
         return ResponseEntity.ok(showService.findBy(showSearchCondition, pageable));
     }
 }

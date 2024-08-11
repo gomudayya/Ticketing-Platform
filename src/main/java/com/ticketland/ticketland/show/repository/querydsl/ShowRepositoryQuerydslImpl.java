@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +24,7 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
 
     private final JPAQueryFactory queryFactory;
     @Override
-    public Page<Show> searchPage(ShowSearchCondition condition, Pageable pageable) {
+    public Slice<Show> searchPage(ShowSearchCondition condition, Pageable pageable) {
         List<Show> content = queryFactory.selectFrom(show)
                 .where(
                         titleEq(condition.getTitle()),
@@ -31,19 +33,13 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
                 )
                 .orderBy(show.ticketingTime.asc())
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(pageable.getPageSize() + 1) // 무한스크롤 방식은 한개 더 받아옴
                 .fetch();
 
-        Long total = queryFactory
-                .select(show.count())
-                .from(show)
-                .where(
-                        titleEq(condition.getTitle()),
-                        performerEq(condition.getPerformer()),
-                        statusFilter(condition.getShowStatus())
-                ).fetchOne();
+        boolean hasNext = content.size() > pageable.getPageSize(); // 다음 페이지 여부 확인
+        if (hasNext) content.remove(content.size()-1); // 다음페이지가 있는걸 확인했으면 마지막 항목 확인
 
-        return new PageImpl<>(content, pageable, total);
+        return new SliceImpl<>(content, pageable, hasNext);
     }
 
     private BooleanExpression titleEq(String title) {
