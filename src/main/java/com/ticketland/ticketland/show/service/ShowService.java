@@ -18,7 +18,7 @@ public class ShowService {
 
     public ShowSingleResponse findById(Long showId) {
         Show show = showRepository.findById(showId)
-                .orElseThrow(() -> new NotFoundException("해당 공연을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("공연"));
 
         return ShowSingleResponse.from(show);
     }
