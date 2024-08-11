@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +24,12 @@ public class WishlistController {
     @PostMapping("/{showId}")
     public ResponseEntity<WishlistResponse> createWishlist(@AuthenticationPrincipal Long userId, @PathVariable Long showId) {
         return ResponseEntity.ok(wishlistService.createWishlist(userId, showId));
+    }
+
+    @Secured(UserRole.Authority.USER)
+    @DeleteMapping("/{wishlistId}")
+    public ResponseEntity<?> deleteWishlist(@PathVariable Long wishlistId) {
+        wishlistService.deleteWishlist(wishlistId);
+        return ResponseEntity.noContent().build();
     }
 }

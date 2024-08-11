@@ -12,9 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
+@SQLDelete(sql = "UPDATE wishlist SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_Deleted = 0")
 public class Wishlist extends BaseTimeEntity {
 
     @Id

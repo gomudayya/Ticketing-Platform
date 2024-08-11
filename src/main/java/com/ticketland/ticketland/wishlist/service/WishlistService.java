@@ -32,4 +32,9 @@ public class WishlistService {
         wishlistRepository.save(wishlist);
         return WishlistResponse.from(wishlist);
     }
+
+    public void deleteWishlist(Long wishlistId) {
+        Wishlist wishlist = wishlistRepository.findById(wishlistId).orElseThrow(() -> new NotFoundException("위시리스트"));
+        wishlistRepository.delete(wishlist);
+    }
 }
