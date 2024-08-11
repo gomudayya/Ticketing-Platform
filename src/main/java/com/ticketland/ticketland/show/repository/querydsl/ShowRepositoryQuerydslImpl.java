@@ -7,8 +7,6 @@ import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.dto.ShowSearchCondition;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -26,9 +24,11 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
     @Override
     public Slice<Show> searchPage(ShowSearchCondition condition, Pageable pageable) {
         List<Show> content = queryFactory.selectFrom(show)
+                .leftJoin(show.genre).fetchJoin()
                 .where(
-                        titleEq(condition.getTitle()),
-                        performerEq(condition.getPerformer()),
+                        containsTitle(condition.getTitle()),
+                        containsPerformer(condition.getPerformer()),
+                        containsGenre(condition.getGenre()),
                         statusFilter(condition.getShowStatus())
                 )
                 .orderBy(show.ticketingTime.asc())
@@ -42,19 +42,22 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
         return new SliceImpl<>(content, pageable, hasNext);
     }
 
-    private BooleanExpression titleEq(String title) {
+    private BooleanExpression containsTitle(String title) {
         return StringUtils.isEmpty(title) ? null : show.title.containsIgnoreCase(title);
     }
 
-    private BooleanExpression performerEq(String performer) {
+    private BooleanExpression containsPerformer(String performer) {
         return StringUtils.isEmpty(performer) ? null : show.performer.containsIgnoreCase(performer);
+    }
+
+    private BooleanExpression containsGenre(String genre) {
+        return StringUtils.isEmpty(genre) ? null : show.genre.genreName.containsIgnoreCase(genre);
     }
 
     private BooleanExpression statusFilter(ShowStatus status) {
         if (status == null) return null;
 
         LocalDateTime now = LocalDateTime.now();
-
         switch (status) {
             case BEFORE_TICKET_OPEN:
                 return isBeforeTicketOpen(now);

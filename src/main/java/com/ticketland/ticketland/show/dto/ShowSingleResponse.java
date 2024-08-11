@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ShowSingleResponse {
     private Long id;
+    private String genre;
     private String performer;
     private String title;
     private String descriptionImage;
@@ -24,6 +25,7 @@ public class ShowSingleResponse {
     public static ShowSingleResponse from(Show show) {
         return ShowSingleResponse.builder()
                 .id(show.getId())
+                .genre(show.getGenreName())
                 .performer(show.getPerformer())
                 .title(show.getTitle())
                 .descriptionImage(show.getDescriptionImage())
