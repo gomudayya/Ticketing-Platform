@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 @Setter
 public class ShowSearchCondition {
+    private String genre;
     private String title;
     private String performer;
     private ShowStatus showStatus;
