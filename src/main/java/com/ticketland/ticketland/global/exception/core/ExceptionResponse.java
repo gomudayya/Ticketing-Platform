@@ -13,8 +13,17 @@ public class ExceptionResponse {
         this.errorCode = errorCode.name();
         this.msg = errorCode.getMsg();
     }
+    private ExceptionResponse(Integer statusCode, String errorCode, String msg) {
+        this.statusCode = statusCode;
+        this.errorCode = errorCode;
+        this.msg = msg;
+    }
 
     public static ExceptionResponse of(ErrorCode errorCode) {
         return new ExceptionResponse(errorCode);
+    }
+
+    public static ExceptionResponse of(Integer statusCode, String errorCode, String msg) {
+        return new ExceptionResponse(statusCode, errorCode, msg);
     }
 }

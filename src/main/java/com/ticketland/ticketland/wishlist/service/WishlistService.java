@@ -26,7 +26,7 @@ public class WishlistService {
     private final ShowRepository showRepository;
 
     public WishlistResponse createWishlist(Long userId, Long showId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("회원"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("유저"));
         Show show = showRepository.findById(showId).orElseThrow(() -> new NotFoundException("공연"));
 
         Wishlist wishlist = Wishlist.builder()

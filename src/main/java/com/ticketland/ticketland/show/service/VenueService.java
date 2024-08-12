@@ -36,7 +36,7 @@ public class VenueService {
                 .build();
 
         venueRepository.save(venue);
-        insertSeatInVenue(venue, seatCountDetails); // 좌석 테이블에 좌석정보 Insert
+        insertSeatInVenue(venue, seatCountDetails); // 좌석 테이블에 좌석정보 Insert. 나중에 비동기 처리 해줘야함.
         return VenueDetailResponse.from(venue);
     }
 

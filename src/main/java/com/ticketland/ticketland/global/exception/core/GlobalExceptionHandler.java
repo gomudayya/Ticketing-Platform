@@ -38,7 +38,9 @@ public class GlobalExceptionHandler {
 
         ErrorCode errorCode = e.getErrorCode();
         if (!e.getMessage().equals(errorCode.getMsg())) {
-            errorCode.changeMsg(e.getMessage()); // 에러코드 메시지와 예외 메시지가 다를경우에는 예외 메시지가 우선한다.
+            // 에러코드 메시지와 예외 메시지가 다를경우에는 예외 메시지가 우선한다.
+            return ResponseEntity.status(errorCode.getStatusCode())
+                            .body(ExceptionResponse.of(errorCode.getStatusCode(), errorCode.name(), e.getMessage()));
         }
 
         return ResponseEntity.status(errorCode.getStatusCode())
