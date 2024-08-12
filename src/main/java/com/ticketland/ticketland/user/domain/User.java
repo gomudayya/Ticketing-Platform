@@ -4,6 +4,8 @@ import com.ticketland.ticketland.global.domain.BaseTimeEntity;
 import com.ticketland.ticketland.global.util.AesUtil;
 import com.ticketland.ticketland.user.constant.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +25,8 @@ public class User extends BaseTimeEntity {
     private String name;
     private String phoneNumber;
     private boolean isDeleted;
+
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     @Builder

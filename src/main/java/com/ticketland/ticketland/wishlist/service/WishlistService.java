@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class WishlistService {
 
@@ -24,7 +25,6 @@ public class WishlistService {
     private final UserRepository userRepository;
     private final ShowRepository showRepository;
 
-    @Transactional
     public WishlistResponse createWishlist(Long userId, Long showId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("회원"));
         Show show = showRepository.findById(showId).orElseThrow(() -> new NotFoundException("공연"));
@@ -38,7 +38,6 @@ public class WishlistService {
         return WishlistResponse.from(wishlist);
     }
 
-    @Transactional
     public void deleteWishlist(Long wishlistId) {
         Wishlist wishlist = wishlistRepository.findById(wishlistId).orElseThrow(() -> new NotFoundException("위시리스트"));
         wishlistRepository.delete(wishlist);

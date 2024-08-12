@@ -4,6 +4,7 @@ import com.ticketland.ticketland.global.util.AesUtil;
 import com.ticketland.ticketland.user.constant.UserRole;
 import com.ticketland.ticketland.user.domain.JoinVerification;
 import com.ticketland.ticketland.user.domain.User;
+import com.ticketland.ticketland.user.dto.AdminJoinRequest;
 import com.ticketland.ticketland.user.dto.JoinRequest;
 import com.ticketland.ticketland.user.dto.UserInfoResponse;
 import com.ticketland.ticketland.user.exception.EmailNotVerifiedException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -24,7 +26,6 @@ public class UserService {
     private final JoinVerificationRepository joinVerificationRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public UserInfoResponse join(JoinRequest joinRequest) {
         JoinVerification joinVerification = joinVerificationRepository.findById(joinRequest.getEmail())
                 .orElseThrow(VerifyExpiredException::new);

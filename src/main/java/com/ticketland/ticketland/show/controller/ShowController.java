@@ -1,8 +1,8 @@
 package com.ticketland.ticketland.show.controller;
 
-import com.ticketland.ticketland.show.dto.ShowSliceResponse;
-import com.ticketland.ticketland.show.dto.ShowSearchCondition;
-import com.ticketland.ticketland.show.dto.ShowSingleResponse;
+import com.ticketland.ticketland.show.dto.show.ShowDetailResponse;
+import com.ticketland.ticketland.show.dto.show.ShowSliceResponse;
+import com.ticketland.ticketland.show.dto.show.ShowSearchCondition;
 import com.ticketland.ticketland.show.service.ShowService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ShowController {
     private final ShowService showService;
 
     @GetMapping("/{showId}")
-    public ResponseEntity<ShowSingleResponse> findShow(@PathVariable Long showId) {
+    public ResponseEntity<ShowDetailResponse> findShow(@PathVariable Long showId) {
         return ResponseEntity.ok(showService.findById(showId));
     }
 

@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.show.dto;
+package com.ticketland.ticketland.show.dto.show;
 
 import com.ticketland.ticketland.show.domain.Show;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class ShowSingleResponse {
-    private Long id;
+    private Long showId;
     private String genre;
     private String performer;
     private String title;
@@ -24,7 +24,7 @@ public class ShowSingleResponse {
 
     public static ShowSingleResponse from(Show show) {
         return ShowSingleResponse.builder()
-                .id(show.getId())
+                .showId(show.getId())
                 .genre(show.getGenreName())
                 .performer(show.getPerformer())
                 .title(show.getTitle())
