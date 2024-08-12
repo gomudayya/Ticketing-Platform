@@ -20,7 +20,6 @@ public class VenueCreateRequest {
     @NotBlank
     private String seatLayoutData;
 
-    private Integer seatCount;
     private Map<String, Integer> seatCountDetails; // <Section, 해당 Section 의 좌석갯수>
 
     public Venue toEntity() {
@@ -28,8 +27,6 @@ public class VenueCreateRequest {
                 .venueName(venueName)
                 .address(address)
                 .seatLayoutData(seatLayoutData)
-                .seatCount(seatCount)
                 .build();
-
     }
 }

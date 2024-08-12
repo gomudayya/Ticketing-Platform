@@ -20,12 +20,18 @@ public class VenueService {
     private final VenueRepository venueRepository;
     private final SeatRepository seatRepository;
 
-    public VenueDetailResponse createVenue(VenueCreateRequest venueCreateRequest) {
-        Venue venue = venueCreateRequest.toEntity();
+    public VenueDetailResponse createVenue(VenueCreateRequest request) {
+        Map<String, Integer> seatCountDetails = request.getSeatCountDetails(); // <Section, 해당 Section 의 좌석갯수>
+        int seatCount = seatCountDetails.values().stream().mapToInt(n -> n).sum();
+
+        Venue venue = Venue.builder()
+                .venueName(request.getVenueName())
+                .address(request.getAddress())
+                .seatLayoutData(request.getSeatLayoutData())
+                .seatCount(seatCount)
+                .build();
+
         venueRepository.save(venue);
-
-        Map<String, Integer> seatCountDetails = venueCreateRequest.getSeatCountDetails(); // <Section, 해당 Section 의 좌석갯수>
-
         insertSeatInVenue(venue, seatCountDetails); // 좌석 테이블에 좌석정보 Insert
         return VenueDetailResponse.from(venue);
     }
