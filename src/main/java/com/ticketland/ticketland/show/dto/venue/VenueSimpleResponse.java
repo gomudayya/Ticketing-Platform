@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VenueResponse {
+public class VenueSimpleResponse {
     private Long venueId;
     private String venueName;
     private String address;
     private Integer seatCount;
 
-    public static VenueResponse from(Venue venue) {
+    public static VenueSimpleResponse from(Venue venue) {
         return builder()
                 .venueId(venue.getId())
                 .venueName(venue.getVenueName())

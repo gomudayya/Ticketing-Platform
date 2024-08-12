@@ -17,7 +17,7 @@ public class WishlistPageResponse {
     
     private Integer currentPage;
     private Integer lastPage;
-    private Integer totalContent;
+    private Long totalContent;
     private Integer pageSize;
     private List<WishlistResponse> content;
 
@@ -29,8 +29,8 @@ public class WishlistPageResponse {
         return builder()
                 .currentPage(wishlistPage.getNumber())
                 .lastPage(wishlistPage.getTotalPages() - 1)
+                .totalContent(wishlistPage.getTotalElements())
                 .pageSize(wishlistPage.getSize())
-                .totalContent(wishlistPage.getTotalPages())
                 .content(content)
                 .build();
     }

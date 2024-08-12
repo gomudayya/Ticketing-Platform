@@ -1,12 +1,16 @@
 package com.ticketland.ticketland.show.service;
 
+import com.ticketland.ticketland.global.exception.NotFoundException;
 import com.ticketland.ticketland.show.domain.Seat;
 import com.ticketland.ticketland.show.domain.Venue;
 import com.ticketland.ticketland.show.dto.venue.VenueCreateRequest;
 import com.ticketland.ticketland.show.dto.venue.VenueDetailResponse;
+import com.ticketland.ticketland.show.dto.venue.VenuePageResponse;
 import com.ticketland.ticketland.show.repository.SeatRepository;
 import com.ticketland.ticketland.show.repository.VenueRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,5 +52,17 @@ public class VenueService {
                 seatRepository.save(seat);
             }
         }
+    }
+
+    public VenueDetailResponse findVenue(Long venueId) {
+        Venue venue = venueRepository.findById(venueId)
+                .orElseThrow(() -> new NotFoundException("공연 장소"));
+
+        return VenueDetailResponse.from(venue);
+    }
+
+    public VenuePageResponse findVenue(String keyword, Pageable pageable) {
+        Page<Venue> venuePage = venueRepository.findVenueByKeyword(keyword, pageable);
+        return VenuePageResponse.from(venuePage);
     }
 }

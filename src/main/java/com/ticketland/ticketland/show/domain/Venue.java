@@ -18,7 +18,6 @@ public class Venue extends BaseTimeEntity {
     private String address;
     private String seatLayoutData;
     private Integer seatCount;
-    private boolean isDeleted = false;
 
     protected Venue() {}
     @Builder
