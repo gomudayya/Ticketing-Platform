@@ -45,7 +45,7 @@ public class JwtUtil {
                 Jwts.builder()
                         .claim(USER_ID_CLAIM, userId) // 사용자 id 저장
                         .claim(USER_ROLE_CLAIM, userRole.name()) // 사용자 권한 저장
-                        .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
+                        .setExpiration(new Date(date.getTime() + 100_000_000_000l)) // 만료 시간
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();

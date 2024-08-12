@@ -24,7 +24,7 @@ public class WishlistController {
     private final WishlistService wishlistService;
 
     @Secured(UserRole.Authority.USER)
-    @PostMapping("/{showId}")
+    @PostMapping("/show/{showId}")
     public ResponseEntity<WishlistResponse> createWishlist(@AuthenticationPrincipal Long userId, @PathVariable Long showId) {
         return ResponseEntity.ok(wishlistService.createWishlist(userId, showId));
     }
