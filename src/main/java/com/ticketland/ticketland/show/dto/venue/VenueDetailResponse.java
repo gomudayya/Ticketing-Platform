@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.show.dto;
+package com.ticketland.ticketland.show.dto.venue;
 
 import com.ticketland.ticketland.show.domain.Venue;
 import lombok.AllArgsConstructor;
@@ -7,22 +7,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VenueResponse {
-    private Long venueId;
+@Builder
+public class VenueDetailResponse {
+    private Long id;
     private String venueName;
     private String address;
-    private String seatImage;
-    private String seatCount;
+    private String seatLayoutData;
+    private Integer seatCount;
 
-    public static VenueResponse from(Venue venue) {
+    public static VenueDetailResponse from(Venue venue) {
         return builder()
-                .venueId(venue.getId())
+                .id(venue.getId())
                 .venueName(venue.getVenueName())
                 .address(venue.getAddress())
-                .seatImage(venue.getSeatImage())
+                .seatLayoutData(venue.getSeatLayoutData())
                 .seatCount(venue.getSeatCount())
                 .build();
     }

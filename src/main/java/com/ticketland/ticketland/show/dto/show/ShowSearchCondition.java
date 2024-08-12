@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.show.dto;
+package com.ticketland.ticketland.show.dto.show;
 
 import com.ticketland.ticketland.show.constant.ShowStatus;
 import lombok.AllArgsConstructor;

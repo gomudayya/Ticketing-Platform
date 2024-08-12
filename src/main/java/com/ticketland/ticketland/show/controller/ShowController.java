@@ -1,9 +1,8 @@
 package com.ticketland.ticketland.show.controller;
 
-import com.ticketland.ticketland.show.dto.ShowDetailResponse;
-import com.ticketland.ticketland.show.dto.ShowSliceResponse;
-import com.ticketland.ticketland.show.dto.ShowSearchCondition;
-import com.ticketland.ticketland.show.dto.ShowSingleResponse;
+import com.ticketland.ticketland.show.dto.show.ShowDetailResponse;
+import com.ticketland.ticketland.show.dto.show.ShowSliceResponse;
+import com.ticketland.ticketland.show.dto.show.ShowSearchCondition;
 import com.ticketland.ticketland.show.service.ShowService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

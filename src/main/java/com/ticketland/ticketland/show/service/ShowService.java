@@ -2,9 +2,9 @@ package com.ticketland.ticketland.show.service;
 
 import com.ticketland.ticketland.global.exception.NotFoundException;
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.dto.ShowDetailResponse;
-import com.ticketland.ticketland.show.dto.ShowSearchCondition;
-import com.ticketland.ticketland.show.dto.ShowSliceResponse;
+import com.ticketland.ticketland.show.dto.show.ShowDetailResponse;
+import com.ticketland.ticketland.show.dto.show.ShowSearchCondition;
+import com.ticketland.ticketland.show.dto.show.ShowSliceResponse;
 import com.ticketland.ticketland.show.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

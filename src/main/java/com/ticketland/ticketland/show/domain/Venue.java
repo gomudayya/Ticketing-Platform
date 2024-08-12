@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -15,8 +16,16 @@ public class Venue extends BaseTimeEntity {
     private Long id;
     private String venueName;
     private String address;
-    private String seatImage;
-    private String seatCount;
+    private String seatLayoutData;
+    private Integer seatCount;
     private boolean isDeleted = false;
 
+    protected Venue() {}
+    @Builder
+    public Venue(String venueName, String address, String seatLayoutData, Integer seatCount) {
+        this.venueName = venueName;
+        this.address = address;
+        this.seatLayoutData = seatLayoutData;
+        this.seatCount = seatCount;
+    }
 }

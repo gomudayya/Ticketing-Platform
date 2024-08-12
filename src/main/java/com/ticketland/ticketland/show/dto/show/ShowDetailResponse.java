@@ -1,7 +1,8 @@
-package com.ticketland.ticketland.show.dto;
+package com.ticketland.ticketland.show.dto.show;
 
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.Venue;
+import com.ticketland.ticketland.show.dto.venue.VenueResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

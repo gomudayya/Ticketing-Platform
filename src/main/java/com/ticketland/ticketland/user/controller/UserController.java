@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping
     @Secured(UserRole.Authority.USER)
-    public ResponseEntity<UserInfoResponse> getMemberByAccessToken(@AuthenticationPrincipal Long id) {
+    public ResponseEntity<UserInfoResponse> getUserByAccessToken(@AuthenticationPrincipal Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 }

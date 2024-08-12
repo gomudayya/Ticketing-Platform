@@ -1,7 +1,7 @@
 package com.ticketland.ticketland.show.repository.querydsl;
 
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.dto.ShowSearchCondition;
+import com.ticketland.ticketland.show.dto.show.ShowSearchCondition;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

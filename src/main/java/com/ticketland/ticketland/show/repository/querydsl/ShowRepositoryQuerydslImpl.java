@@ -4,7 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ticketland.ticketland.show.constant.ShowStatus;
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.dto.ShowSearchCondition;
+import com.ticketland.ticketland.show.dto.show.ShowSearchCondition;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
