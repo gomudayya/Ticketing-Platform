@@ -2,6 +2,7 @@ package com.ticketland.ticketland.show.service;
 
 import com.ticketland.ticketland.global.exception.NotFoundException;
 import com.ticketland.ticketland.show.domain.Show;
+import com.ticketland.ticketland.show.dto.ShowDetailResponse;
 import com.ticketland.ticketland.show.dto.ShowSliceResponse;
 import com.ticketland.ticketland.show.dto.ShowSearchCondition;
 import com.ticketland.ticketland.show.dto.ShowSingleResponse;
@@ -18,11 +19,11 @@ public class ShowService {
     private final ShowRepository showRepository;
 
     @Transactional(readOnly = true)
-    public ShowSingleResponse findById(Long showId) {
+    public ShowDetailResponse findById(Long showId) {
         Show show = showRepository.findById(showId)
                 .orElseThrow(() -> new NotFoundException("공연"));
 
-        return ShowSingleResponse.from(show);
+        return ShowDetailResponse.from(show);
     }
 
     @Transactional(readOnly = true)

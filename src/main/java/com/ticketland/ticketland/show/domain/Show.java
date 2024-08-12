@@ -26,6 +26,10 @@ public class Show extends BaseTimeEntity {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venue_id")
+    private Venue venue;
+
     private String performer;
     private String title;
     private String descriptionImage;
