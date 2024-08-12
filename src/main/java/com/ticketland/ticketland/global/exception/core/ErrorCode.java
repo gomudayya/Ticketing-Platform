@@ -17,7 +17,9 @@ public enum ErrorCode {
 
     NOT_FOUND(404, "해당 %s을 찾을 수 없습니다."),
 
-    ACCESS_DENIED(403, "권한이 부족합니다.")
+    ACCESS_DENIED(403, "권한이 부족합니다."),
+
+    INVALID_ADMIN_KEY(401, "어드민 키가 올바르지 않습니다")
     ;
 
     private final int statusCode;

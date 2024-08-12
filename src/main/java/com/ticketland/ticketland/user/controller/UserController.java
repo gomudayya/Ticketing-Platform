@@ -1,10 +1,12 @@
 package com.ticketland.ticketland.user.controller;
 
 import com.ticketland.ticketland.user.constant.UserRole;
+import com.ticketland.ticketland.user.dto.AdminJoinRequest;
 import com.ticketland.ticketland.user.dto.EmailRequest;
 import com.ticketland.ticketland.user.dto.EmailVerifyRequest;
 import com.ticketland.ticketland.user.dto.JoinRequest;
 import com.ticketland.ticketland.user.dto.UserInfoResponse;
+import com.ticketland.ticketland.user.service.AdminService;
 import com.ticketland.ticketland.user.service.UserEmailService;
 import com.ticketland.ticketland.user.service.UserService;
 import jakarta.validation.Valid;
@@ -25,6 +27,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserEmailService userEmailService;
+    private final AdminService adminService;
 
     @PostMapping("/email-verification/request")
     public ResponseEntity<?> sendVerificationCode(@RequestBody @Valid EmailRequest emailRequest) {
@@ -39,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<UserInfoResponse> join(@RequestBody JoinRequest requestDto) {
+    public ResponseEntity<UserInfoResponse> join(@RequestBody @Valid JoinRequest requestDto) {
         return ResponseEntity.ok(userService.join(requestDto));
     }
 
@@ -47,5 +50,10 @@ public class UserController {
     @Secured(UserRole.Authority.USER)
     public ResponseEntity<UserInfoResponse> getUserByAccessToken(@AuthenticationPrincipal Long id) {
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @PostMapping("/adminJoin")
+    public ResponseEntity<UserInfoResponse> adminJoin(@RequestBody @Valid AdminJoinRequest adminJoinRequest) {
+        return ResponseEntity.ok(adminService.adminJoin(adminJoinRequest));
     }
 }

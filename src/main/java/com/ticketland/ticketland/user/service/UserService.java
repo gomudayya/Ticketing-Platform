@@ -4,6 +4,7 @@ import com.ticketland.ticketland.global.util.AesUtil;
 import com.ticketland.ticketland.user.constant.UserRole;
 import com.ticketland.ticketland.user.domain.JoinVerification;
 import com.ticketland.ticketland.user.domain.User;
+import com.ticketland.ticketland.user.dto.AdminJoinRequest;
 import com.ticketland.ticketland.user.dto.JoinRequest;
 import com.ticketland.ticketland.user.dto.UserInfoResponse;
 import com.ticketland.ticketland.user.exception.EmailNotVerifiedException;
