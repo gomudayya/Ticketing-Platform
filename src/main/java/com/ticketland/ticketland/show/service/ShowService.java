@@ -58,6 +58,7 @@ public class ShowService {
                 .build();
 
         showRepository.save(show);
+        ticketService.saveTicketPrices(show, showCreateRequest.getTicketPrices()); // 공연의 티켓별 가격표를 저장
         ticketService.generateTickets(show, venue, showCreateRequest.getTicketPrices()); // 나중에 비동기 처리 해줘야함.
         return ShowDetailResponse.from(show);
     }
