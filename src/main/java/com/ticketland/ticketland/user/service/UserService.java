@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -24,7 +25,6 @@ public class UserService {
     private final JoinVerificationRepository joinVerificationRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public UserInfoResponse join(JoinRequest joinRequest) {
         JoinVerification joinVerification = joinVerificationRepository.findById(joinRequest.getEmail())
                 .orElseThrow(VerifyExpiredException::new);
