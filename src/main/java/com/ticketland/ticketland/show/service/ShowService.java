@@ -46,16 +46,7 @@ public class ShowService {
         Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new NotFoundException("장르"));
         Venue venue = venueRepository.findById(venueId).orElseThrow(() -> new NotFoundException("공연장소"));
 
-        Show show = Show.builder()
-                .genre(genre)
-                .venue(venue)
-                .title(showCreateRequest.getTitle())
-                .performer(showCreateRequest.getPerformer())
-                .descriptionImage(showCreateRequest.getDescriptionImage())
-                .ticketingTime(showCreateRequest.getTicketingTime())
-                .startTime(showCreateRequest.getStartDate())
-                .duration(showCreateRequest.getDuration())
-                .build();
+        Show show = showCreateRequest.toEntity(genre, venue);
 
         showRepository.save(show);
         ticketService.saveTicketPrices(show, showCreateRequest.getTicketPrices()); // 공연의 티켓별 가격표를 저장

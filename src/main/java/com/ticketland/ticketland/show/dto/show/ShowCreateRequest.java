@@ -1,5 +1,8 @@
 package com.ticketland.ticketland.show.dto.show;
 
+import com.ticketland.ticketland.show.domain.Genre;
+import com.ticketland.ticketland.show.domain.Show;
+import com.ticketland.ticketland.show.domain.Venue;
 import com.ticketland.ticketland.show.dto.TicketPriceDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +26,19 @@ public class ShowCreateRequest {
     private LocalDateTime startDate;
     private Integer duration;
     private List<TicketPriceDto> ticketPrices;
+
+    public Show toEntity(Genre genre, Venue venue) {
+        return Show.builder()
+                .genre(genre)
+                .venue(venue)
+                .title(title)
+                .performer(performer)
+                .descriptionImage(descriptionImage)
+                .ticketingTime(ticketingTime)
+                .startTime(startDate)
+                .duration(duration)
+                .build();
+    }
 }
 
 
