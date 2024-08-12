@@ -39,7 +39,6 @@ public class ShowController {
     @PostMapping
     @Secured(UserRole.Authority.ADMIN)
     public ResponseEntity<?> createShow(@RequestBody @Valid ShowCreateRequest showCreateRequest) {
-        showService.createShow(showCreateRequest);
-        return null;
+        return ResponseEntity.ok(showService.createShow(showCreateRequest));
     }
 }

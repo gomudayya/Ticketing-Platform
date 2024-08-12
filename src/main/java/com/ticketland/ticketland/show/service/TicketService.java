@@ -42,7 +42,7 @@ public class TicketService {
     }
 
     public void saveTicketPrices(Show show, List<TicketPriceDto> ticketPriceDtos) {
-        List<TicketPrice> ticketPrices =ticketPriceDtos.stream()
+        List<TicketPrice> ticketPrices = ticketPriceDtos.stream()
                 .map(dto -> dto.toEntity(show))
                 .toList();
 

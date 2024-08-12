@@ -5,6 +5,7 @@ import com.ticketland.ticketland.show.domain.TicketPrice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -19,5 +20,9 @@ public class TicketPriceDto {
                 .price(price)
                 .seatSection(seatSection)
                 .build();
+    }
+
+    public static TicketPriceDto from(TicketPrice ticketPrice) {
+        return new TicketPriceDto(ticketPrice.getSeatSection(), ticketPrice.getPrice());
     }
 }

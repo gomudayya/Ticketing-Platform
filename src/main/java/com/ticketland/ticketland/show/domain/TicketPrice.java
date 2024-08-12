@@ -7,8 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class TicketPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +29,7 @@ public class TicketPrice {
         this.show = show;
         this.seatSection = seatSection;
         this.price = price;
+
+        show.getTicketPrices().add(this); // 연관관계 편의 로직
     }
 }

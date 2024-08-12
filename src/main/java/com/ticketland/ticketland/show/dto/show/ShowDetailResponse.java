@@ -18,13 +18,17 @@ import java.util.List;
 public class ShowDetailResponse {
     private ShowSingleResponse show;
     private VenueSimpleResponse venue;
-//    private List<TicketPriceDto> ticketPrices;
+    private List<TicketPriceDto> ticketPrices;
     public static ShowDetailResponse from(Show show) {
         Venue findVenue = show.getVenue();
+        List<TicketPriceDto> ticketPriceDtos = show.getTicketPrices().stream()
+                .map(TicketPriceDto::from)
+                .toList();
 
         return builder()
                 .show(ShowSingleResponse.from(show))
                 .venue(VenueSimpleResponse.from(findVenue))
+                .ticketPrices(ticketPriceDtos)
                 .build();
     }
 }

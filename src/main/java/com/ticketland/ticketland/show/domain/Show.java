@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +37,9 @@ public class Show extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id")
     private Venue venue;
+
+    @OneToMany(mappedBy = "show")
+    private List<TicketPrice> ticketPrices = new ArrayList<>();
 
     private String performer;
     private String title;
@@ -61,4 +67,5 @@ public class Show extends BaseTimeEntity {
     public String getGenreName() {
         return genre.getGenreName();
     }
+
 }
