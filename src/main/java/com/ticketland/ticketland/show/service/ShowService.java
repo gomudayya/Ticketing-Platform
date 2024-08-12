@@ -10,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ShowService {
     private final ShowRepository showRepository;
 
+    @Transactional(readOnly = true)
     public ShowSingleResponse findById(Long showId) {
         Show show = showRepository.findById(showId)
                 .orElseThrow(() -> new NotFoundException("공연"));
@@ -23,6 +25,7 @@ public class ShowService {
         return ShowSingleResponse.from(show);
     }
 
+    @Transactional(readOnly = true)
     public ShowSliceResponse findBy(ShowSearchCondition showSearchCondition, Pageable pageable) {
         Slice<Show> shows = showRepository.searchPage(showSearchCondition, pageable);
         return ShowSliceResponse.from(shows);

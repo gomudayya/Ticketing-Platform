@@ -45,6 +45,7 @@ public class UserService {
         return UserInfoResponse.from(user);
     }
 
+    @Transactional(readOnly = true)
     public UserInfoResponse findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
