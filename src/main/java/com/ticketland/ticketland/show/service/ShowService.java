@@ -25,6 +25,7 @@ public class ShowService {
     private final GenreRepository genreRepository;
     private final VenueRepository venueRepository;
     private final TicketService ticketService;
+    private final TicketPriceService ticketPriceService;
     @Transactional(readOnly = true)
     public ShowDetailResponse findById(Long showId) {
         Show show = showRepository.findById(showId)
@@ -49,7 +50,7 @@ public class ShowService {
         Show show = showCreateRequest.toEntity(genre, venue);
 
         showRepository.save(show);
-        ticketService.saveTicketPrices(show, showCreateRequest.getTicketPrices()); // 공연의 티켓별 가격표를 저장
+        ticketPriceService.saveTicketPrices(show, showCreateRequest.getTicketPrices()); // 공연의 티켓별 가격표를 저장
         ticketService.generateTickets(show, venue, showCreateRequest.getTicketPrices()); // 나중에 비동기 처리 해줘야함.
         return ShowDetailResponse.from(show);
     }

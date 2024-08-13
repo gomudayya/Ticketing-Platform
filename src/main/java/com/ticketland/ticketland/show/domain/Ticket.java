@@ -1,9 +1,8 @@
 package com.ticketland.ticketland.show.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
+import com.ticketland.ticketland.order.domain.Order;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,28 +18,38 @@ import org.hibernate.annotations.Where;
 public class Ticket extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id; // TicketId = {공연Id}_{좌석섹션}_{좌석번호}
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "show_id")
     private Show show;
-
-    @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
     private Integer price;
-
     private boolean isSold = false;
     private boolean isDeleted = false;
     protected Ticket() {}
+
     @Builder
-    public Ticket(Show show, Seat seat, Integer price) {
+    public Ticket(String id, Show show, Integer price) {
+        this.id = id;
         this.show = show;
-        this.seat = seat;
         this.price = price;
     }
 
+    public void beOrdered(Order order) {
+        this.order = order;
+        isSold = true;
+        order.getTickets().add(this);
+    }
 
+    public String getSeatSection() {
+        return id.split("_")[1];
+    }
+
+    public Integer getSeatNumber() {
+        return Integer.parseInt(id.split("_")[2]);
+    }
 }

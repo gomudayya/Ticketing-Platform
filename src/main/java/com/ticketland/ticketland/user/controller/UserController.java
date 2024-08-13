@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping
     @Secured(UserRole.Authority.USER)
     public ResponseEntity<UserInfoResponse> getUserByAccessToken(@AuthenticationPrincipal Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(userService.findUserInfo(id));
     }
 
     @PostMapping("/adminJoin")

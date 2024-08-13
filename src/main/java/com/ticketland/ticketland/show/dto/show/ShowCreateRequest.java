@@ -3,7 +3,7 @@ package com.ticketland.ticketland.show.dto.show;
 import com.ticketland.ticketland.show.domain.Genre;
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.Venue;
-import com.ticketland.ticketland.show.dto.TicketPriceDto;
+import com.ticketland.ticketland.show.dto.ticket.TicketPriceDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -36,10 +36,10 @@ public class ShowCreateRequest {
     @NotBlank
     private String descriptionImage; // 후.. 원래는 이미지 파일로 올려야 하는데 일단은... 요렇게하자.
 
-    @NotBlank
+    @NotNull
     private LocalDateTime ticketingTime;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime startDate;
 
     @NotNull

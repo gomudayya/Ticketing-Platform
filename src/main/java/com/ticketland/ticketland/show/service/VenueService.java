@@ -22,8 +22,7 @@ import java.util.Map;
 public class VenueService {
 
     private final VenueRepository venueRepository;
-    private final SeatRepository seatRepository;
-
+    private final SeatService seatService;
     public VenueDetailResponse createVenue(VenueCreateRequest request) {
         Map<String, Integer> seatCountDetails = request.getSeatCountDetails(); // <Section, 해당 Section 의 좌석갯수>
         int seatCount = seatCountDetails.values().stream().mapToInt(n -> n).sum();
@@ -36,22 +35,8 @@ public class VenueService {
                 .build();
 
         venueRepository.save(venue);
-        insertSeatInVenue(venue, seatCountDetails); // 좌석 테이블에 좌석정보 Insert. 나중에 비동기 처리 해줘야함.
+        seatService.insertSeatInVenue(venue, seatCountDetails); // 좌석 테이블에 좌석정보 Insert. 나중에 비동기 처리 해줘야함.
         return VenueDetailResponse.from(venue);
-    }
-
-    private void insertSeatInVenue(Venue venue, Map<String, Integer> seatCountDetails) {
-        for (String section : seatCountDetails.keySet()) {
-            for (int seatNumber = 1; seatNumber <= seatCountDetails.get(section); seatNumber++) {
-                Seat seat = Seat.builder()
-                        .venue(venue)
-                        .section(section)
-                        .number(seatNumber)
-                        .build();
-
-                seatRepository.save(seat);
-            }
-        }
     }
 
     public VenueDetailResponse findVenue(Long venueId) {
