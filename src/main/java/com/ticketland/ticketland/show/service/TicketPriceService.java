@@ -1,7 +1,7 @@
 package com.ticketland.ticketland.show.service;
 
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.dto.ticket.TicketPriceDto;
+import com.ticketland.ticketland.ticket.dto.TicketPriceDto;
 import com.ticketland.ticketland.show.repository.TicketPriceRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

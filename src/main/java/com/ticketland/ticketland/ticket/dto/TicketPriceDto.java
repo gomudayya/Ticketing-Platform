@@ -1,4 +1,4 @@
-package com.ticketland.ticketland.show.dto.ticket;
+package com.ticketland.ticketland.ticket.dto;
 
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.TicketPrice;

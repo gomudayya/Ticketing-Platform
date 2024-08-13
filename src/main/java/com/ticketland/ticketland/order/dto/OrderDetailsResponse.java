@@ -2,7 +2,7 @@ package com.ticketland.ticketland.order.dto;
 
 
 import com.ticketland.ticketland.order.domain.Order;
-import com.ticketland.ticketland.show.dto.ticket.TicketResponse;
+import com.ticketland.ticketland.ticket.dto.TicketResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

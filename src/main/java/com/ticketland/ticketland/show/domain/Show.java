@@ -1,6 +1,7 @@
 package com.ticketland.ticketland.show.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
+import com.ticketland.ticketland.show.constant.ShowStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import org.hibernate.annotations.Where;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ticketland.ticketland.show.constant.ShowConstant.PURCHASE_DEADLINE_HOURS_BEFORE_SHOW;
 
 @Entity
 @Getter
@@ -68,4 +71,15 @@ public class Show extends BaseTimeEntity {
         return genre.getGenreName();
     }
 
+    public ShowStatus getShowStatus() {
+        LocalDateTime now = LocalDateTime.now();
+
+        if (now.isBefore(ticketingTime)) {
+            return ShowStatus.BEFORE_TICKET_OPEN;
+        }
+        if (now.isAfter(startTime.minusHours(PURCHASE_DEADLINE_HOURS_BEFORE_SHOW))) {
+            return ShowStatus.TICKET_SALE_ENDED;
+        }
+        else return ShowStatus.TICKET_SALE_ACTIVE;
+    }
 }

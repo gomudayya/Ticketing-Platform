@@ -1,7 +1,9 @@
-package com.ticketland.ticketland.show.domain;
+package com.ticketland.ticketland.ticket.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
 import com.ticketland.ticketland.order.domain.Order;
+import com.ticketland.ticketland.show.constant.ShowStatus;
+import com.ticketland.ticketland.show.domain.Show;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -10,6 +12,8 @@ import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -30,7 +34,9 @@ public class Ticket extends BaseTimeEntity {
     private Integer price;
     private boolean isSold = false;
     private boolean isDeleted = false;
-    protected Ticket() {}
+
+    protected Ticket() {
+    }
 
     @Builder
     public Ticket(String id, Show show, Integer price) {
@@ -45,6 +51,12 @@ public class Ticket extends BaseTimeEntity {
         order.getTickets().add(this);
     }
 
+    public void beCanceled() {
+        isSold = false;
+        order.getTickets().remove(this);
+        order = null;
+    }
+
     public String getSeatSection() {
         return id.split("_")[1];
     }
@@ -52,6 +64,4 @@ public class Ticket extends BaseTimeEntity {
     public Integer getSeatNumber() {
         return Integer.parseInt(id.split("_")[2]);
     }
-
-
 }

@@ -11,6 +11,7 @@ import com.ticketland.ticketland.show.dto.show.ShowSliceResponse;
 import com.ticketland.ticketland.show.repository.GenreRepository;
 import com.ticketland.ticketland.show.repository.ShowRepository;
 import com.ticketland.ticketland.show.repository.VenueRepository;
+import com.ticketland.ticketland.ticket.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

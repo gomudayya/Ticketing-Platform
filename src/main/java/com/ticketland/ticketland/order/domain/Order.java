@@ -2,7 +2,8 @@ package com.ticketland.ticketland.order.domain;
 
 import com.ticketland.ticketland.global.domain.BaseTimeEntity;
 import com.ticketland.ticketland.order.constant.OrderStatus;
-import com.ticketland.ticketland.show.domain.Ticket;
+import com.ticketland.ticketland.show.domain.Show;
+import com.ticketland.ticketland.ticket.domain.Ticket;
 import com.ticketland.ticketland.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -66,5 +67,13 @@ public class Order extends BaseTimeEntity {
 
     public boolean isOwnedBy(Long userId) {
         return user.getId().equals(userId);
+    }
+
+    public void refund() {
+        tickets.forEach(Ticket::beCanceled);
+    }
+
+    public Show getShow() {
+        return tickets.getFirst().getShow();
     }
 }

@@ -1,7 +1,7 @@
-package com.ticketland.ticketland.show.dto.ticket;
+package com.ticketland.ticketland.ticket.dto;
 
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.domain.Ticket;
+import com.ticketland.ticketland.ticket.domain.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

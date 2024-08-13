@@ -3,7 +3,7 @@ package com.ticketland.ticketland.show.dto.show;
 import com.ticketland.ticketland.show.domain.Genre;
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.Venue;
-import com.ticketland.ticketland.show.dto.ticket.TicketPriceDto;
+import com.ticketland.ticketland.ticket.dto.TicketPriceDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

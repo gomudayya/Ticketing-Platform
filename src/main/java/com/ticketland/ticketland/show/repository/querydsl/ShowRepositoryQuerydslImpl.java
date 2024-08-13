@@ -14,7 +14,7 @@ import org.springframework.data.domain.SliceImpl;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.ticketland.ticketland.show.constant.ShowConstant.TICKET_PURCHASE_OFFSET_HOURS;
+import static com.ticketland.ticketland.show.constant.ShowConstant.PURCHASE_DEADLINE_HOURS_BEFORE_SHOW;
 import static com.ticketland.ticketland.show.domain.QShow.show;
 
 @RequiredArgsConstructor
@@ -76,7 +76,7 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
 
     private BooleanExpression isTicketSaleEnded(LocalDateTime now) {
         // ex)공연시작시간 3시간전까지가 티켓 구매 가능시간이다. (시작시간 < 현재시간 + 3시간) => 티켓 종료시간.
-        LocalDateTime time = now.plusHours(TICKET_PURCHASE_OFFSET_HOURS);
+        LocalDateTime time = now.plusHours(PURCHASE_DEADLINE_HOURS_BEFORE_SHOW);
         return show.startTime.loe(time);
     }
 

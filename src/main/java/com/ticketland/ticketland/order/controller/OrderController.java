@@ -43,6 +43,13 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDetailsResponse> findOrderDetails(@AuthenticationPrincipal Long userId,
                                                                  @PathVariable Long orderId) {
-        return ResponseEntity.ok(orderService.findOrder(userId, orderId));
+        return ResponseEntity.ok(orderService.readOrder(userId, orderId));
+    }
+
+    @Secured(UserRole.Authority.USER)
+    @PostMapping("/api/orders/{orderId}/refund")
+    public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthenticationPrincipal Long userId,
+                                                            @PathVariable Long orderId) {
+        return ResponseEntity.ok(orderService.refundOrder(userId, orderId));
     }
 }

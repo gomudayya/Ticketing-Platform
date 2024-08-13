@@ -1,13 +1,13 @@
-package com.ticketland.ticketland.show.service;
+package com.ticketland.ticketland.ticket.service;
 
 import com.ticketland.ticketland.global.exception.NotFoundException;
 import com.ticketland.ticketland.show.domain.Seat;
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.domain.Ticket;
+import com.ticketland.ticketland.ticket.domain.Ticket;
 import com.ticketland.ticketland.show.domain.Venue;
-import com.ticketland.ticketland.show.dto.ticket.TicketPriceDto;
+import com.ticketland.ticketland.ticket.dto.TicketPriceDto;
 import com.ticketland.ticketland.show.repository.SeatRepository;
-import com.ticketland.ticketland.show.repository.TicketRepository;
+import com.ticketland.ticketland.ticket.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
