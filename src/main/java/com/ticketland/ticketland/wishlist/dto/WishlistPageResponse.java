@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class WishlistPageResponse {
 
-    private PageMetaDto pageMetaDto;
+    private PageMetaDto pageMeta;
     private List<WishlistResponse> content;
 
     public static WishlistPageResponse from(Page<Wishlist> wishlistPage) {
@@ -25,7 +25,7 @@ public class WishlistPageResponse {
                 .toList();
 
         return builder()
-                .pageMetaDto(PageMetaDto.from(wishlistPage))
+                .pageMeta(PageMetaDto.from(wishlistPage))
                 .content(content)
                 .build();
     }

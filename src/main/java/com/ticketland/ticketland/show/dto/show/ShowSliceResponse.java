@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ShowSliceResponse {
-    private SlicePageDto slicePageDto;
+    private SlicePageDto pageMeta;
     private List<ShowSingleResponse> content;
 
     public static ShowSliceResponse from(Slice<Show> shows) {
@@ -25,7 +25,7 @@ public class ShowSliceResponse {
 
 
         return ShowSliceResponse.builder()
-                .slicePageDto(SlicePageDto.from(shows))
+                .pageMeta(SlicePageDto.from(shows))
                 .content(content)
                 .build();
     }

@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 public class VenuePageResponse {
-    private PageMetaDto pageMetaDto;
+    private PageMetaDto pageMeta;
     private List<VenueSimpleResponse> content;
 
     public static VenuePageResponse from(Page<Venue> venuePage) {
@@ -24,7 +24,7 @@ public class VenuePageResponse {
                 .toList();
 
         return builder()
-                .pageMetaDto(PageMetaDto.from(venuePage))
+                .pageMeta(PageMetaDto.from(venuePage))
                 .content(findContent)
                 .build();
     }
