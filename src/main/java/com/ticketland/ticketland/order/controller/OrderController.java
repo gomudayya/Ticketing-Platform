@@ -50,6 +50,6 @@ public class OrderController {
     @PostMapping("/api/orders/{orderId}/refund")
     public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthenticationPrincipal Long userId,
                                                             @PathVariable Long orderId) {
-        return ResponseEntity.ok(orderService.refundOrder(userId, orderId));
+        return ResponseEntity.ok(orderService.cancelOrder(userId, orderId));
     }
 }

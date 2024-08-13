@@ -5,6 +5,7 @@ import com.ticketland.ticketland.order.constant.OrderStatus;
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.ticket.domain.Ticket;
 import com.ticketland.ticketland.user.domain.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,8 +33,12 @@ public class Order extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
-    private List<Ticket> tickets = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "show_id")
+    private Show show;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    private List<OrderTicket> orderTickets = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -41,39 +46,49 @@ public class Order extends BaseTimeEntity {
     protected Order() {
     }
 
-    private Order(User user, OrderStatus orderStatus) {
+    private Order(User user, Show show, OrderStatus orderStatus) {
         this.user = user;
+        this.show = show;
         this.orderStatus = orderStatus;
     }
 
-    public static Order of(User user, OrderStatus orderStatus) {
-        return new Order(user, orderStatus);
+    public static Order createOrder(User user, Show show, List<OrderTicket> orderTickets) {
+        Order order = new Order(user, show, OrderStatus.ORDER);
+        orderTickets.forEach(order::addOrderTicket);
+        return order;
     }
 
-
     public Integer getTotalPrice() {
-        return tickets.stream()
-                .mapToInt(Ticket::getPrice)
+        return orderTickets.stream()
+                .mapToInt(OrderTicket::getPrice)
                 .sum();
     }
 
     public Integer getQuantity() {
-        return tickets.size();
+        return orderTickets.size();
     }
 
-    public String getShowTitle() {
-        return tickets.get(0).getShow().getTitle();
-    }
 
     public boolean isOwnedBy(Long userId) {
         return user.getId().equals(userId);
     }
 
-    public void refund() {
-        tickets.forEach(Ticket::beCanceled);
+    public void addOrderTicket(OrderTicket orderTicket) {
+        orderTickets.add(orderTicket);
+        orderTicket.setOrder(this); // 연관관계 편의 로직
     }
 
-    public Show getShow() {
-        return tickets.getFirst().getShow();
+    public List<Ticket> getTickets() {
+        return orderTickets.stream()
+                .map(OrderTicket::getTicket)
+                .toList();
+    }
+
+    public void cancel() {
+        orderStatus = OrderStatus.CANCEL;
+
+        for (OrderTicket orderTicket : orderTickets) {
+            orderTicket.cancel();
+        }
     }
 }
