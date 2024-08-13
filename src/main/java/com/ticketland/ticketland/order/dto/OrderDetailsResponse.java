@@ -14,25 +14,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderPurchaseResponse {
+public class OrderDetailsResponse {
 
     private Long orderId;
     private Integer totalPrice; // 전체 가격
     private String orderStatus; // 주문 상태
+    private Integer quantity; // 수량
     private List<TicketResponse> tickets; // 티켓 세부 정보 리스트
 
-    public static OrderPurchaseResponse from(Order order) {
+    public static OrderDetailsResponse from(Order order) {
         List<TicketResponse> ticketResponses = order.getTickets().stream()
                 .map(TicketResponse::from)
                 .toList();
-
 
         return builder()
                 .orderId(order.getId())
                 .totalPrice(order.getTotalPrice())
                 .orderStatus(order.getOrderStatus().getDescription())
+                .quantity(order.getQuantity())
                 .tickets(ticketResponses)
                 .build();
-
     }
 }

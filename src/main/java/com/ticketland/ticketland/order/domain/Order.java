@@ -55,4 +55,16 @@ public class Order extends BaseTimeEntity {
                 .mapToInt(Ticket::getPrice)
                 .sum();
     }
+
+    public Integer getQuantity() {
+        return tickets.size();
+    }
+
+    public String getShowTitle() {
+        return tickets.get(0).getShow().getTitle();
+    }
+
+    public boolean isOwnedBy(Long userId) {
+        return user.getId().equals(userId);
+    }
 }

@@ -20,6 +20,7 @@ public enum ErrorCode {
     ACCESS_DENIED(403, "권한이 부족합니다."),
 
     INVALID_ADMIN_KEY(401, "어드민 키가 올바르지 않습니다")
+
     ;
 
     private final int statusCode;
