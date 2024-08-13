@@ -9,9 +9,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Getter
 @Entity
+@SQLDelete(sql = "UPDATE ticket SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_Deleted = 0")
 public class Ticket extends BaseTimeEntity {
 
     @Id
