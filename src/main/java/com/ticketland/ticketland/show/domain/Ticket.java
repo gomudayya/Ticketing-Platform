@@ -52,4 +52,6 @@ public class Ticket extends BaseTimeEntity {
     public Integer getSeatNumber() {
         return Integer.parseInt(id.split("_")[2]);
     }
+
+
 }

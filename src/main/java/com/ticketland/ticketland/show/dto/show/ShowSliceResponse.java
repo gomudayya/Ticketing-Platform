@@ -1,5 +1,6 @@
 package com.ticketland.ticketland.show.dto.show;
 
+import com.ticketland.ticketland.global.dto.SlicePageDto;
 import com.ticketland.ticketland.show.domain.Show;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ShowSliceResponse {
-    private Integer presentPage;
-    private Boolean hasNext;
+    private SlicePageDto slicePageDto;
     private List<ShowSingleResponse> content;
 
     public static ShowSliceResponse from(Slice<Show> shows) {
@@ -25,8 +25,7 @@ public class ShowSliceResponse {
 
 
         return ShowSliceResponse.builder()
-                .presentPage(shows.getNumber())
-                .hasNext(shows.hasNext())
+                .slicePageDto(SlicePageDto.from(shows))
                 .content(content)
                 .build();
     }

@@ -25,4 +25,5 @@ public class OrderController {
     public ResponseEntity<OrderPurchaseResponse> order(@AuthenticationPrincipal Long userId, @RequestBody OrderPurchaseRequest orderPurchaseRequest) {
         return ResponseEntity.ok(orderService.orderTickets(userId, orderPurchaseRequest));
     }
+
 }
