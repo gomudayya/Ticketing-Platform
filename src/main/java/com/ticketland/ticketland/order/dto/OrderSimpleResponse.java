@@ -23,7 +23,7 @@ public class OrderSimpleResponse {
                 .totalPrice(order.getTotalPrice())
                 .quantity(order.getQuantity())
                 .orderStatus(order.getOrderStatus().getDescription())
-                .showTitle(order.getShowTitle())
+                .showTitle(order.getShow().getTitle())
                 .build();
     }
 }

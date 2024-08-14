@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     @Secured(UserRole.Authority.USER)
-    @PostMapping("/api/orders/{orderId}/refund")
+    @PostMapping("/{orderId}/refund")
     public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthenticationPrincipal Long userId,
                                                             @PathVariable Long orderId) {
         return ResponseEntity.ok(orderService.cancelOrder(userId, orderId));
