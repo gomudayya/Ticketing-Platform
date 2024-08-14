@@ -1,5 +1,6 @@
 package com.ticketland.ticketland.show.dto.venue;
 
+import com.ticketland.ticketland.global.dto.PageMetaDto;
 import com.ticketland.ticketland.show.domain.Venue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,10 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 public class VenuePageResponse {
-    private Integer currentPage;
-    private Integer lastPage;
-    private Long totalContent;
-    private Integer pageSize;
+    private PageMetaDto pageMeta;
     private List<VenueSimpleResponse> content;
 
     public static VenuePageResponse from(Page<Venue> venuePage) {
@@ -26,10 +24,7 @@ public class VenuePageResponse {
                 .toList();
 
         return builder()
-                .currentPage(venuePage.getNumber())
-                .lastPage(venuePage.getTotalPages() -1)
-                .totalContent(venuePage.getTotalElements())
-                .pageSize(venuePage.getSize())
+                .pageMeta(PageMetaDto.from(venuePage))
                 .content(findContent)
                 .build();
     }

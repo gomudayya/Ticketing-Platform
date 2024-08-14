@@ -1,11 +1,10 @@
-package com.ticketland.ticketland.show.dto;
+package com.ticketland.ticketland.ticket.dto;
 
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.TicketPrice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor

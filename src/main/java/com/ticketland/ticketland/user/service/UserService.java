@@ -46,10 +46,13 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserInfoResponse findById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("유저"));
-
+    public UserInfoResponse findUserInfo(Long userId) {
+        User user = findUserById(userId);
         return UserInfoResponse.from(user);
+    }
+
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("유저"));
     }
 }

@@ -1,14 +1,13 @@
-package com.ticketland.ticketland.show.service;
+package com.ticketland.ticketland.ticket.service;
 
+import com.ticketland.ticketland.global.exception.NotFoundException;
 import com.ticketland.ticketland.show.domain.Seat;
 import com.ticketland.ticketland.show.domain.Show;
-import com.ticketland.ticketland.show.domain.Ticket;
-import com.ticketland.ticketland.show.domain.TicketPrice;
+import com.ticketland.ticketland.ticket.domain.Ticket;
 import com.ticketland.ticketland.show.domain.Venue;
-import com.ticketland.ticketland.show.dto.TicketPriceDto;
+import com.ticketland.ticketland.ticket.dto.TicketPriceDto;
 import com.ticketland.ticketland.show.repository.SeatRepository;
-import com.ticketland.ticketland.show.repository.TicketPriceRepository;
-import com.ticketland.ticketland.show.repository.TicketRepository;
+import com.ticketland.ticketland.ticket.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,30 +21,29 @@ public class TicketService {
 
     private final SeatRepository seatRepository;
     private final TicketRepository ticketRepository;
-    private final TicketPriceRepository ticketPriceRepository;
     public void generateTickets(Show show, Venue venue, List<TicketPriceDto> ticketPrices) {
         for (TicketPriceDto ticketPrice : ticketPrices) {
             List<Seat> seats = seatRepository.findByVenueIdAndSection(venue.getId(), ticketPrice.getSeatSection()); // 장소Id와 섹션을 통해 좌석을 조회한다.
-            List<Ticket> tickets = seats.stream()
+            seats.stream()
                     .map(seat -> createTicket(show, seat, ticketPrice.getPrice()))
-                    .toList();
+                    .forEach(ticketRepository::save);
 
-            ticketRepository.saveAll(tickets);
         }
     }
     private Ticket createTicket(Show show, Seat seat, Integer price) {
         return Ticket.builder()
+                .id(generateTicketId(show.getId(), seat.getSection(), seat.getNumber()))
                 .show(show)
-                .seat(seat)
                 .price(price)
                 .build();
     }
 
-    public void saveTicketPrices(Show show, List<TicketPriceDto> ticketPriceDtos) {
-        List<TicketPrice> ticketPrices = ticketPriceDtos.stream()
-                .map(dto -> dto.toEntity(show))
-                .toList();
+    private String generateTicketId(Long showId, String seatSection, Integer seatNumber) {
+        return String.format("%d_%s_%d", showId, seatSection, seatNumber); // TicketId = {공연Id}_{좌석섹션}_{좌석번호}
+    }
 
-        ticketPriceRepository.saveAll(ticketPrices);
+    public Ticket findTicket(Long showId, String seatSection, Integer seatNumber) {
+        return ticketRepository.findById(generateTicketId(showId, seatSection, seatNumber))
+                .orElseThrow(() -> new NotFoundException("티켓"));
     }
 }

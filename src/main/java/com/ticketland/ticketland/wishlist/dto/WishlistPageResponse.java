@@ -1,5 +1,6 @@
 package com.ticketland.ticketland.wishlist.dto;
 
+import com.ticketland.ticketland.global.dto.PageMetaDto;
 import com.ticketland.ticketland.wishlist.domain.Wishlist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,11 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class WishlistPageResponse {
-    
-    private Integer currentPage;
-    private Integer lastPage;
-    private Long totalContent;
-    private Integer pageSize;
+
+    private PageMetaDto pageMeta;
     private List<WishlistResponse> content;
 
     public static WishlistPageResponse from(Page<Wishlist> wishlistPage) {
@@ -27,10 +25,7 @@ public class WishlistPageResponse {
                 .toList();
 
         return builder()
-                .currentPage(wishlistPage.getNumber())
-                .lastPage(wishlistPage.getTotalPages() - 1)
-                .totalContent(wishlistPage.getTotalElements())
-                .pageSize(wishlistPage.getSize())
+                .pageMeta(PageMetaDto.from(wishlistPage))
                 .content(content)
                 .build();
     }

@@ -2,7 +2,7 @@ package com.ticketland.ticketland.show.dto.show;
 
 import com.ticketland.ticketland.show.domain.Show;
 import com.ticketland.ticketland.show.domain.Venue;
-import com.ticketland.ticketland.show.dto.TicketPriceDto;
+import com.ticketland.ticketland.ticket.dto.TicketPriceDto;
 import com.ticketland.ticketland.show.dto.venue.VenueSimpleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

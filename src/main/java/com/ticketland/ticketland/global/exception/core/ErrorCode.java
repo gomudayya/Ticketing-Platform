@@ -19,7 +19,10 @@ public enum ErrorCode {
 
     ACCESS_DENIED(403, "권한이 부족합니다."),
 
-    INVALID_ADMIN_KEY(401, "어드민 키가 올바르지 않습니다")
+    INVALID_ADMIN_KEY(401, "어드민 키가 올바르지 않습니다"),
+
+    TICKET_SALE_NOT_ACTIVE(400, "현재는 티켓 판매 시간이 아닙니다"),
+    TICKET_REFUND_NOT_ACTIVE(400, "현재는 환불 가능 시간이 아닙니다.")
     ;
 
     private final int statusCode;
