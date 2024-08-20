@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6378:6379"
+  #extra host 설정 해줘야함
+
+
+  user-database:
+    image: mysql:8.0
+    container_name: user-database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ticket-land-user
+    ports:
+      - "3307:3306"
+    volumes:
+      - user-data:/var/lib/mysql
+
+  show-database:
+    image: mysql:8.0
+    container_name: show-database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ticket-land-show
+    ports:
+      - "3309:3306"
+    volumes:
+      - show-data:/var/lib/mysql
+
+  order-database:
+    image: mysql:8.0
+    container_name: order-database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ticket-land-order
+    ports:
+      - "3308:3306"
+    volumes:
+      - order-data:/var/lib/mysql
+
+volumes:
+  user-data:
+  show-data:
+  order-data:
