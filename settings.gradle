@@ -1,1 +1,14 @@
 rootProject.name = 'ticketland'
+
+// 인프라
+include 'discovery-server'
+include 'api-gateway'
+
+// Micro Service 공통 모듈
+include 'service-common'
+
+// Micro Service
+include 'user-service'
+include 'order-service'
+include 'show-service'
+

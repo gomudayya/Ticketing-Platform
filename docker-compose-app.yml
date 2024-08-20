@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  discovery-server:
+    container_name: discovery
+    build:
+      context: ./discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    environment:
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://user-database:3306/ticket-land-user
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: 1234
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+
+  order-service:
+    container_name: order-service
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://order-database:3306/ticket-land-order
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+
+  show-service:
+    container_name: show-service
+    build:
+      context: ./show-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://show-database:3306/ticket-land-show
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/

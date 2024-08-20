@@ -2,12 +2,13 @@ version: '3.8'
 
 services:
   redis:
-    image: redis:latest
+    image: redis:alpine
     container_name: redis
     ports:
       - "6378:6379"
-  #extra host 설정 해줘야함
-
+    command: ["redis-server", "--bind", "0.0.0.0", "--protected-mode", "no"]
+    environment:
+      REDIS_PASSWORD: 1234
 
   user-database:
     image: mysql:8.0
@@ -20,17 +21,6 @@ services:
     volumes:
       - user-data:/var/lib/mysql
 
-  show-database:
-    image: mysql:8.0
-    container_name: show-database
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: ticket-land-show
-    ports:
-      - "3309:3306"
-    volumes:
-      - show-data:/var/lib/mysql
-
   order-database:
     image: mysql:8.0
     container_name: order-database
@@ -42,7 +32,19 @@ services:
     volumes:
       - order-data:/var/lib/mysql
 
+  show-database:
+    image: mysql:8.0
+    container_name: show-database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ticket-land-show
+    ports:
+      - "3309:3306"
+    volumes:
+      - show-data:/var/lib/mysql
+
 volumes:
   user-data:
   show-data:
   order-data:
+
