@@ -42,7 +42,7 @@ public class Show extends BaseTimeEntity {
     private Venue venue;
 
     @OneToMany(mappedBy = "show")
-    private List<TicketPrice> ticketPrices = new ArrayList<>();
+    private List<ShowSeat> showSeats = new ArrayList<>();
 
     private String performer;
     private String title;

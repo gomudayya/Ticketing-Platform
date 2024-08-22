@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class TicketPrice {
+public class ShowSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,14 +22,16 @@ public class TicketPrice {
 
     private String seatSection;
     private Integer price;
+    private Integer stock;
 
-    protected TicketPrice(){}
+    protected ShowSeat(){}
     @Builder
-    public TicketPrice(Show show, String seatSection, Integer price) {
+    public ShowSeat(Show show, String seatSection, Integer price, Integer stock) {
         this.show = show;
         this.seatSection = seatSection;
         this.price = price;
+        this.stock = stock;
 
-        show.getTicketPrices().add(this); // 연관관계 편의 로직
+        show.getShowSeats().add(this); // 연관관계 편의 로직
     }
 }

@@ -3,7 +3,7 @@ package com.example.showservice.show.dto.show;
 import com.example.showservice.show.domain.Genre;
 import com.example.showservice.show.domain.Show;
 import com.example.showservice.show.domain.Venue;
-import com.example.showservice.show.dto.TicketPriceDto;
+import com.example.showservice.show.dto.SeatPriceDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,32 +21,32 @@ import java.util.List;
 @Builder
 public class ShowCreateRequest {
 
-    @NotNull
+    @NotNull(message = "공연장 ID는 필수 항목입니다.")
     private Long venueId;
 
-    @NotNull
+    @NotNull(message = "장르 ID는 필수 항목입니다.")
     private Long genreId;
 
-    @NotBlank
+    @NotBlank(message = "공연자는 필수 항목입니다.")
     private String performer;
 
-    @NotBlank
+    @NotBlank(message = "공연 제목은 필수 항목입니다.")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "공연 이미지 URL은 필수 항목입니다.")
     private String titleImage; // 후.. 원래는 이미지 파일로 올려야 하는데 일단은... 요렇게하자.
 
-    @NotNull
+    @NotNull(message = "티켓 오픈 시간은 필수 항목입니다.")
     private LocalDateTime ticketingTime;
 
-    @NotNull
+    @NotNull(message = "공연 시작 날짜는 필수 항목입니다.")
     private LocalDateTime startDate;
 
-    @NotNull
+    @NotNull(message = "공연 시간(분)은 필수 항목입니다.")
     private Integer duration;
 
-    @NotEmpty
-    private List<TicketPriceDto> ticketPrices;
+    @NotEmpty(message = "좌석 가격 정보는 비어있을 수 없습니다.")
+    private List<SeatPriceDto> seatPrice;
 
     public Show toEntity(Genre genre, Venue venue) {
         return Show.builder()

@@ -1,6 +1,7 @@
-package com.example.showservice.show.dto;
+package com.example.showservice.client.orderservice.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,12 +16,14 @@ import java.util.List;
 public class TicketCreateRequest {
     private Long showId;
 
-    private List<SeatInfo> seatInfos;
+    private List<SeatInfoDto> seatInfo;
 
     @Getter
     @Setter
     @ToString
-    public static class SeatInfo {
+    @AllArgsConstructor
+    @Builder
+    public static class SeatInfoDto {
         private String section;
         private Long count;
         private Integer price;

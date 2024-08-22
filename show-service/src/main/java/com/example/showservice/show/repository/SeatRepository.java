@@ -1,8 +1,6 @@
 package com.example.showservice.show.repository;
 
 import com.example.showservice.show.domain.Seat;
-import com.example.showservice.show.dto.TicketCreateRequest;
-import com.example.showservice.show.dto.show.ShowCreateRequest;
 import com.example.showservice.show.repository.querydsl.SeatRepositoryQuerydsl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
