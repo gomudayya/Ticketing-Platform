@@ -10,9 +10,9 @@ import org.springframework.data.redis.core.TimeToLive;
 public class JoinVerification {
 
     @Id
-    private String email;
+    private final String email;
 
-    private int code;
+    private final int code;
 
     private boolean isVerified = false;
 
