@@ -45,7 +45,7 @@ public class Order extends BaseTimeEntity {
     }
 
     public static Order createOrder(Long userId, Long showId, List<OrderTicket> orderTickets) {
-        Order order = new Order(userId, showId, OrderStatus.ORDER);
+        Order order = new Order(userId, showId, OrderStatus.PENDING);
         orderTickets.forEach(order::addOrderTicket);
         return order;
     }

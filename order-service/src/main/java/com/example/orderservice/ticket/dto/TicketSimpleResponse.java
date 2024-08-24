@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class TicketResponse {
+public class TicketSimpleResponse {
     private Long ticketId;
     private Integer price;
     private String seatSection;
     private Integer seatNumber;
 
-    public static TicketResponse from(Ticket ticket) {
+    public static TicketSimpleResponse from(Ticket ticket) {
         return builder()
                 .ticketId(ticket.getId())
                 .price(ticket.getPrice())

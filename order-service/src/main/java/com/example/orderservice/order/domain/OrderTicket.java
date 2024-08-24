@@ -44,6 +44,6 @@ public class OrderTicket extends BaseTimeEntity {
     }
 
     public void cancel() {
-        ticket.beRefunded();
+        ticket.makeTicketAvailable();
     }
 }

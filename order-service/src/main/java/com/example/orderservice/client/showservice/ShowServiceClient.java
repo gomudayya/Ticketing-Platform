@@ -12,9 +12,6 @@ import java.util.List;
 @FeignClient(name = "show-service")
 public interface ShowServiceClient {
 
-//    @GetMapping("/api/shows/{showId}")
-//    ShowDetailResponse getShow(@PathVariable Long showId);
-
     @GetMapping("/internal/shows/{showId}")
     ShowSimpleResponse getShow(@PathVariable Long showId);
 

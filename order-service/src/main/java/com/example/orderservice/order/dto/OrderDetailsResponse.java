@@ -3,7 +3,7 @@ package com.example.orderservice.order.dto;
 
 import com.example.orderservice.client.showservice.dto.ShowSimpleResponse;
 import com.example.orderservice.order.domain.Order;
-import com.example.orderservice.ticket.dto.TicketResponse;
+import com.example.orderservice.ticket.dto.TicketSimpleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,11 +25,11 @@ public class OrderDetailsResponse {
     private Integer quantity; // 수량
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
-    private List<TicketResponse> tickets; // 티켓 세부 정보 리스트
+    private List<TicketSimpleResponse> tickets; // 티켓 세부 정보 리스트
 
     public static OrderDetailsResponse from(Order order, ShowSimpleResponse showSimpleResponse) {
-        List<TicketResponse> ticketResponses = order.getTickets().stream()
-                .map(TicketResponse::from)
+        List<TicketSimpleResponse> ticketSimpleResponse = order.getTickets().stream()
+                .map(TicketSimpleResponse::from)
                 .toList();
 
         return builder()
@@ -40,7 +40,7 @@ public class OrderDetailsResponse {
                 .quantity(order.getQuantity())
                 .createdTime(order.getCreatedTime())
                 .updatedTime(order.getUpdatedTime())
-                .tickets(ticketResponses)
+                .tickets(ticketSimpleResponse)
                 .build();
     }
 }

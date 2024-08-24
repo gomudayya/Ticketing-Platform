@@ -30,7 +30,10 @@ public class OrderController {
     @PostMapping
     @AllowedAuthority(UserRole.Authority.USER)
     public ResponseEntity<OrderDetailsResponse> orderTicket(@AuthPrincipal UserClaim userClaim, @RequestBody OrderPurchaseRequest orderPurchaseRequest) {
-        return ResponseEntity.ok(orderService.orderTickets(userClaim.getUserId(), orderPurchaseRequest));
+        OrderDetailsResponse orderDetailsResponse
+                = orderService.orderTickets(userClaim.getUserId(), orderPurchaseRequest.getShowId(), orderPurchaseRequest.getSeats());
+
+        return ResponseEntity.ok(orderDetailsResponse);
     }
 
     @GetMapping
@@ -51,6 +54,6 @@ public class OrderController {
     @AllowedAuthority(UserRole.Authority.USER)
     public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthPrincipal UserClaim userClaim,
                                                             @PathVariable Long orderId) {
-        return ResponseEntity.ok(orderService.cancelOrder(userClaim.getUserId(), orderId));
+        return ResponseEntity.ok(orderService.refundOrder(userClaim.getUserId(), orderId));
     }
 }

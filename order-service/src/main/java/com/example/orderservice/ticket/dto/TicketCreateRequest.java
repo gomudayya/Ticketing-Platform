@@ -21,7 +21,7 @@ public class TicketCreateRequest {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class SeatInfoDto {
+    public static class SeatInfoDto { // 티켓을 생성할 때 좌석 정보
         private String section;
         private Integer count;
         private Integer price;
