@@ -50,6 +50,9 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
       EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: 1234
 
   show-service:
     container_name: show-service
