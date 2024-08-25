@@ -46,4 +46,8 @@ public class OrderTicket extends BaseTimeEntity {
     public void cancel() {
         ticket.makeTicketAvailable();
     }
+
+    public void isPaidBy(Long userId) {
+        ticket.isPurchasedBy(userId);
+    }
 }

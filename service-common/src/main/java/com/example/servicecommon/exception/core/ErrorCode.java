@@ -25,7 +25,9 @@ public enum ErrorCode {
 
     TICKET_REFUND_NOT_ACTIVE(400, "현재는 환불 가능 시간이 아닙니다."),
 
-    TICKET_ALREADY_SELECTED(409, "해당 티켓은 이미 선택되었거나, 구매된 티켓입니다.")
+    TICKET_ALREADY_SELECTED(409, "해당 티켓은 이미 선택되었거나, 구매된 티켓입니다."),
+
+    INVALID_PAYMENT(400, "결제 정보가 올바르지 않습니다.")
     ;
 
     private final int statusCode;

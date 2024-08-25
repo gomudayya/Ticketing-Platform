@@ -78,9 +78,11 @@ public class Order extends BaseTimeEntity {
 
     public void cancel() {
         orderStatus = OrderStatus.CANCEL;
+        orderTickets.forEach(OrderTicket::cancel);
+    }
 
-        for (OrderTicket orderTicket : orderTickets) {
-            orderTicket.cancel();
-        }
+    public void isPaidBy(Long userId) {
+        orderStatus = OrderStatus.SUCCESS;
+        orderTickets.forEach(orderTicket -> orderTicket.isPaidBy(userId));
     }
 }

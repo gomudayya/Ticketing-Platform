@@ -7,7 +7,6 @@ import com.example.orderservice.order.domain.Order;
 import com.example.orderservice.order.domain.OrderTicket;
 import com.example.orderservice.order.dto.OrderDetailsResponse;
 import com.example.orderservice.order.dto.OrderPageResponse;
-import com.example.orderservice.order.dto.OrderPurchaseRequest;
 import com.example.orderservice.order.dto.SeatDto;
 import com.example.orderservice.order.exception.TicketRefundNotActiveException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
@@ -106,7 +105,7 @@ public class OrderService {
         return OrderDetailsResponse.from(order, show);
     }
 
-    private Order findOrder(Long userId, Long orderId) {
+    public Order findOrder(Long userId, Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("주문"));
 

@@ -64,7 +64,7 @@ public class Ticket extends BaseTimeEntity {
         }
 
         this.userId = userId;
-        ticketStatus = TicketStatus.SELECTED;
+        ticketStatus = TicketStatus.SOLD;
     }
 
     public void makeTicketAvailable() {
