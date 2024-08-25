@@ -1,4 +1,4 @@
-package com.example.orderservice.fixture.extrnal;
+package com.example.orderservice.fixture.show;
 
 import com.example.orderservice.client.showservice.dto.ShowSimpleResponse;
 import com.example.orderservice.client.showservice.dto.ShowStatus;

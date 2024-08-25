@@ -20,8 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.example.orderservice.fixture.extrnal.ShowSimpleResponseFixture.createBeforeTicketOpenShow;
-import static com.example.orderservice.fixture.extrnal.ShowSimpleResponseFixture.createTicketSaleActiveShow;
+import static com.example.orderservice.fixture.show.ShowSimpleResponseFixture.createBeforeTicketOpenShow;
+import static com.example.orderservice.fixture.show.ShowSimpleResponseFixture.createTicketSaleActiveShow;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
