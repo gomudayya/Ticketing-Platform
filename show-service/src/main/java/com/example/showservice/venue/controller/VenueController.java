@@ -1,11 +1,11 @@
-package com.example.showservice.show.controller;
+package com.example.showservice.venue.controller;
 
 import com.example.servicecommon.auth.AllowedAuthority;
 import com.example.servicecommon.auth.UserRole;
-import com.example.showservice.show.dto.venue.VenueCreateRequest;
-import com.example.showservice.show.dto.venue.VenueDetailResponse;
-import com.example.showservice.show.dto.venue.VenuePageResponse;
-import com.example.showservice.show.service.VenueService;
+import com.example.showservice.venue.dto.VenueCreateRequest;
+import com.example.showservice.venue.dto.VenueDetailResponse;
+import com.example.showservice.venue.dto.VenuePageResponse;
+import com.example.showservice.venue.service.VenueService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

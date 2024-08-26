@@ -1,26 +1,28 @@
-package com.example.showservice.show.dto.venue;
+package com.example.showservice.venue.dto;
 
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Venue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VenueSimpleResponse {
-    private Long venueId;
+@Builder
+public class VenueDetailResponse {
+    private Long id;
     private String venueName;
     private String address;
+    private String seatLayoutData;
     private Integer seatCount;
 
-    public static VenueSimpleResponse from(Venue venue) {
+    public static VenueDetailResponse from(Venue venue) {
         return builder()
-                .venueId(venue.getId())
+                .id(venue.getId())
                 .venueName(venue.getVenueName())
                 .address(venue.getAddress())
+                .seatLayoutData(venue.getSeatLayoutData())
                 .seatCount(venue.getSeatCount())
                 .build();
     }

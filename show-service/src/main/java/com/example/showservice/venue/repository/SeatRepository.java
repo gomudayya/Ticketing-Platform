@@ -1,7 +1,7 @@
-package com.example.showservice.show.repository;
+package com.example.showservice.venue.repository;
 
-import com.example.showservice.show.domain.Seat;
-import com.example.showservice.show.repository.querydsl.SeatRepositoryQuerydsl;
+import com.example.showservice.venue.domain.Seat;
+import com.example.showservice.venue.repository.querydsl.SeatRepositoryQuerydsl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

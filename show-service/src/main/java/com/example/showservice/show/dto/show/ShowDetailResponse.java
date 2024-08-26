@@ -1,10 +1,9 @@
 package com.example.showservice.show.dto.show;
 
 import com.example.showservice.show.domain.Show;
-import com.example.showservice.show.domain.Venue;
-import com.example.showservice.show.dto.SeatPriceDto;
+import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.show.dto.ShowSeatDto;
-import com.example.showservice.show.dto.venue.VenueSimpleResponse;
+import com.example.showservice.venue.dto.VenueSimpleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

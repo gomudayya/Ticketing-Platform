@@ -1,4 +1,4 @@
-package com.example.showservice.show.dto.seat;
+package com.example.showservice.show.dto;
 
 import lombok.Getter;
 import lombok.Setter;

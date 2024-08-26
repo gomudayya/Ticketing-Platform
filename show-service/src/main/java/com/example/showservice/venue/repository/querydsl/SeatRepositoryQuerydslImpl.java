@@ -1,7 +1,6 @@
-package com.example.showservice.show.repository.querydsl;
+package com.example.showservice.venue.repository.querydsl;
 
-import com.example.showservice.client.orderservice.dto.TicketCreateRequest;
-import com.example.showservice.show.dto.seat.SeatCountDto;
+import com.example.showservice.show.dto.SeatCountDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

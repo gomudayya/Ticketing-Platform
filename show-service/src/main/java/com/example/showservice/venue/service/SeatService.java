@@ -1,9 +1,9 @@
-package com.example.showservice.show.service;
+package com.example.showservice.venue.service;
 
 import com.example.servicecommon.exception.NotFoundException;
-import com.example.showservice.show.domain.Seat;
-import com.example.showservice.show.repository.SeatRepository;
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Seat;
+import com.example.showservice.venue.repository.SeatRepository;
+import com.example.showservice.venue.domain.Venue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

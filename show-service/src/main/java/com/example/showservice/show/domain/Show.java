@@ -2,6 +2,7 @@ package com.example.showservice.show.domain;
 
 import com.example.showservice.global.domain.BaseTimeEntity;
 import com.example.showservice.show.constant.ShowStatus;
+import com.example.showservice.venue.domain.Venue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

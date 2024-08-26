@@ -1,5 +1,6 @@
-package com.example.showservice.show.domain;
+package com.example.showservice.venue.domain;
 
+import com.example.showservice.venue.domain.Venue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

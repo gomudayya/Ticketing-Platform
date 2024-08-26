@@ -1,7 +1,7 @@
-package com.example.showservice.show.dto.venue;
+package com.example.showservice.venue.dto;
 
 import com.example.showservice.global.dto.PageMetaDto;
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Venue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

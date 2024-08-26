@@ -1,11 +1,11 @@
-package com.example.showservice.show.service;
+package com.example.showservice.venue.service;
 
 import com.example.servicecommon.exception.NotFoundException;
-import com.example.showservice.show.domain.Venue;
-import com.example.showservice.show.dto.venue.VenueCreateRequest;
-import com.example.showservice.show.dto.venue.VenueDetailResponse;
-import com.example.showservice.show.dto.venue.VenuePageResponse;
-import com.example.showservice.show.repository.VenueRepository;
+import com.example.showservice.venue.domain.Venue;
+import com.example.showservice.venue.dto.VenueCreateRequest;
+import com.example.showservice.venue.dto.VenueDetailResponse;
+import com.example.showservice.venue.dto.VenuePageResponse;
+import com.example.showservice.venue.repository.VenueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

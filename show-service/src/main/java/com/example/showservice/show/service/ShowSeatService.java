@@ -3,7 +3,7 @@ package com.example.showservice.show.service;
 import com.example.showservice.show.domain.Show;
 import com.example.showservice.show.domain.ShowSeat;
 import com.example.showservice.show.dto.SeatPriceDto;
-import com.example.showservice.show.dto.seat.SeatCountDto;
+import com.example.showservice.show.dto.SeatCountDto;
 import com.example.showservice.show.repository.ShowSeatRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

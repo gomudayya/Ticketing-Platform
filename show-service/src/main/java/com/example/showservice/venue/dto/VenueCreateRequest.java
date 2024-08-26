@@ -1,9 +1,8 @@
-package com.example.showservice.show.dto.venue;
+package com.example.showservice.venue.dto;
 
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Venue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

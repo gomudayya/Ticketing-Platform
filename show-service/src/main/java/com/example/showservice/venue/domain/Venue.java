@@ -1,4 +1,4 @@
-package com.example.showservice.show.domain;
+package com.example.showservice.venue.domain;
 
 import com.example.showservice.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;

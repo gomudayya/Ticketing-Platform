@@ -4,19 +4,19 @@ import com.example.servicecommon.exception.NotFoundException;
 import com.example.showservice.client.orderservice.OrderServiceClient;
 import com.example.showservice.show.domain.Genre;
 import com.example.showservice.show.domain.Show;
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.client.orderservice.dto.TicketCreateRequest;
 import com.example.showservice.show.dto.SeatPriceDto;
-import com.example.showservice.show.dto.seat.SeatCountDto;
+import com.example.showservice.show.dto.SeatCountDto;
 import com.example.showservice.show.dto.show.ShowCreateRequest;
 import com.example.showservice.show.dto.show.ShowDetailResponse;
 import com.example.showservice.show.dto.show.ShowSearchCondition;
 import com.example.showservice.show.dto.show.ShowSimpleResponse;
 import com.example.showservice.show.dto.show.ShowSliceResponse;
 import com.example.showservice.show.repository.GenreRepository;
-import com.example.showservice.show.repository.SeatRepository;
+import com.example.showservice.venue.repository.SeatRepository;
 import com.example.showservice.show.repository.ShowRepository;
-import com.example.showservice.show.repository.VenueRepository;
+import com.example.showservice.venue.repository.VenueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -88,7 +88,7 @@ public class ShowService {
         }
 
         TicketCreateRequest ticketCreateRequest = new TicketCreateRequest(showId, seatInfos);
-        orderServiceClient.createTicket(ticketCreateRequest); // 이거 트랜잭션 롤백 생각해야하네..
+        orderServiceClient.createTicket(ticketCreateRequest);
     }
     private Show findShow(Long showId) {
         return showRepository.findById(showId)

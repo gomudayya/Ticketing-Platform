@@ -2,7 +2,7 @@ package com.example.showservice.show.dto.show;
 
 import com.example.showservice.show.domain.Genre;
 import com.example.showservice.show.domain.Show;
-import com.example.showservice.show.domain.Venue;
+import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.show.dto.SeatPriceDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
