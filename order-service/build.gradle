@@ -32,6 +32,9 @@ dependencies {
 
     //test DB
     runtimeOnly 'com.h2database:h2'
+
+    //flyway
+    implementation 'org.flywaydb:flyway-mysql'
 }
 
 def querydslSrcDir = 'src/main/generated'

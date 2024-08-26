@@ -3,8 +3,9 @@ package com.example.orderservice.payment.domain;
 import com.example.orderservice.global.domain.BaseTimeEntity;
 import com.example.orderservice.order.domain.Order;
 import com.example.orderservice.payment.constant.PaymentStatus;
-import com.example.orderservice.payment.dto.PaymentRequest;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +26,8 @@ public class Payment extends BaseTimeEntity {
     @JoinColumn(name = "order_id")
     private Order order;
     private Integer amount;
+
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     protected Payment (){}
