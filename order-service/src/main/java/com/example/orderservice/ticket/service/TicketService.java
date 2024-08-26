@@ -6,7 +6,9 @@ import com.example.orderservice.order.dto.SeatDto;
 import com.example.orderservice.ticket.domain.Ticket;
 import com.example.orderservice.ticket.dto.TicketCreateRequest;
 import com.example.orderservice.ticket.dto.TicketDetailResponse;
+import com.example.orderservice.ticket.dto.TicketAvailableResponse;
 import com.example.orderservice.ticket.repository.TicketRepository;
+import com.example.orderservice.ticket.repository.dto.TicketStatusDto;
 import com.example.servicecommon.exception.CustomAccessDeniedException;
 import com.example.servicecommon.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +67,8 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
-
+    public TicketAvailableResponse getTicketsSelectionStatus(Long showId, String seatSection) {
+        List<TicketStatusDto> ticketStatusList = ticketRepository.findTicketStatus(showId, seatSection);
+        return TicketAvailableResponse.of(ticketStatusList);
+    }
 }

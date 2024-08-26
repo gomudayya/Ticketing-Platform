@@ -36,6 +36,13 @@ public class OrderController {
         return ResponseEntity.ok(orderDetailsResponse);
     }
 
+    @PostMapping("/{orderId}/refund")
+    @AllowedAuthority(UserRole.Authority.USER)
+    public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthPrincipal UserClaim userClaim,
+                                                            @PathVariable Long orderId) {
+        return ResponseEntity.ok(orderService.refundOrder(userClaim.getUserId(), orderId));
+    }
+
     @GetMapping
     @AllowedAuthority(UserRole.Authority.USER)
     public ResponseEntity<OrderPageResponse> findMyOrders(@AuthPrincipal UserClaim userClaim,
@@ -48,12 +55,5 @@ public class OrderController {
     public ResponseEntity<OrderDetailsResponse> findOrderDetails(@AuthPrincipal UserClaim userClaim,
                                                                  @PathVariable Long orderId) {
         return ResponseEntity.ok(orderService.readOrder(userClaim.getUserId(), orderId));
-    }
-
-    @PostMapping("/{orderId}/refund")
-    @AllowedAuthority(UserRole.Authority.USER)
-    public ResponseEntity<OrderDetailsResponse> refundOrder(@AuthPrincipal UserClaim userClaim,
-                                                            @PathVariable Long orderId) {
-        return ResponseEntity.ok(orderService.refundOrder(userClaim.getUserId(), orderId));
     }
 }

@@ -21,7 +21,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @SQLDelete(sql = "UPDATE ticket SET is_deleted = true WHERE id = ?")
-@Where(clause = "is_Deleted = 0")
+@Where(clause = "is_Deleted = false")
 @ToString
 public class Ticket extends BaseTimeEntity {
 
