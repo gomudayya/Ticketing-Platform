@@ -1,7 +1,6 @@
 package com.example.userservice.auth.config;
 
 import com.example.userservice.auth.filter.JwtAuthenticationFilter;
-import com.example.userservice.auth.filter.JwtAuthorizationFilter;
 import com.example.userservice.auth.handler.CustomAuthenticationEntryPoint;
 import com.example.userservice.auth.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +31,7 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //http.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource)); 나중에 cors 설정 해줘야함.
+//        http.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource)); 나중에 cors 설정 해줘야함.
 
         http.csrf(CsrfConfigurer::disable); // JWT 를 사용하는 경우, CSRF 공격의 위험이 적으므로 비활성화 함. (쿠키x 헤더로 JWT 토큰을 보낼 때 기준)
         http.sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // JWT 사용 -> 세션 STATELESS 설정
@@ -41,7 +40,6 @@ public class SecurityConfig {
         http.logout(AbstractHttpConfigurer::disable);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint()));
         return http.build();
     }
@@ -49,11 +47,6 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         return new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), objectMapper, jwtUtil);
-    }
-
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil);
     }
 
     @Bean
