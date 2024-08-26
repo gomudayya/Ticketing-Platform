@@ -1,7 +1,7 @@
-package com.example.showservice.wishlist.domain;
+package com.example.userservice.wishlist.domain;
 
-import com.example.showservice.global.domain.BaseTimeEntity;
-import com.example.showservice.show.domain.Show;
+import com.example.userservice.global.domain.BaseTimeEntity;
+import com.example.userservice.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,16 +24,16 @@ public class Wishlist extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "show_id")
-    private Show show;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private Long showId;
     private boolean isDeleted = false;
     @Builder
-    public Wishlist(Long userId, Show show) {
-        this.userId = userId;
-        this.show = show;
+    public Wishlist(User user, Long showId) {
+        this.user = user;
+        this.showId = showId;
     }
 
     protected Wishlist() {}

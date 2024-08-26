@@ -90,7 +90,6 @@ public class ShowService {
         TicketCreateRequest ticketCreateRequest = new TicketCreateRequest(showId, seatInfos);
         orderServiceClient.createTicket(ticketCreateRequest); // 이거 트랜잭션 롤백 생각해야하네..
     }
-
     private Show findShow(Long showId) {
         return showRepository.findById(showId)
                 .orElseThrow(() -> new NotFoundException("공연"));

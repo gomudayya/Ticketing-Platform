@@ -1,12 +1,12 @@
-package com.example.showservice.wishlist.controller;
+package com.example.userservice.wishlist.controller;
 
 import com.example.servicecommon.auth.AllowedAuthority;
 import com.example.servicecommon.auth.UserRole;
 import com.example.servicecommon.dto.UserClaim;
 import com.example.servicecommon.resolver.AuthPrincipal;
-import com.example.showservice.wishlist.dto.WishlistPageResponse;
-import com.example.showservice.wishlist.dto.WishlistResponse;
-import com.example.showservice.wishlist.service.WishlistService;
+import com.example.userservice.wishlist.dto.WishlistPageResponse;
+import com.example.userservice.wishlist.dto.WishlistResponse;
+import com.example.userservice.wishlist.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +40,6 @@ public class WishlistController {
     @GetMapping
     @AllowedAuthority(UserRole.Authority.USER)
     public ResponseEntity<WishlistPageResponse> findWishlist(@AuthPrincipal UserClaim userClaim, Pageable pageable) {
-        return ResponseEntity.ok(wishlistService.findWishlist(userClaim.getUserId(), pageable));
+        return ResponseEntity.ok(wishlistService.findMyWishlist(userClaim.getUserId(), pageable));
     }
 }
