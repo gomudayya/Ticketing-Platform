@@ -14,6 +14,7 @@ import com.example.showservice.show.dto.show.ShowSearchCondition;
 import com.example.showservice.show.dto.show.ShowSimpleResponse;
 import com.example.showservice.show.dto.show.ShowSliceResponse;
 import com.example.showservice.show.repository.GenreRepository;
+import com.example.showservice.venue.exception.SeatSectionUnmatchedException;
 import com.example.showservice.venue.repository.SeatRepository;
 import com.example.showservice.show.repository.ShowRepository;
 import com.example.showservice.venue.repository.VenueRepository;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,14 +67,26 @@ public class ShowService {
         showRepository.save(show);
 
         List<SeatCountDto> seatCounts = seatRepository.findSeatCounts(venue.getId());
+        checkSeatSectionEqual(seatCounts, request.getSeatPrice());
+
         showSeatService.saveShowSeatInfo(show, request.getSeatPrice(), seatCounts); // 공연의 좌석 정보를 저장. (좌석섹션별 좌석가격 및 좌석재고)
 
         requestTicketGenerate(show.getId(), request.getSeatPrice(), seatCounts);
         return ShowDetailResponse.from(show);
     }
 
+    private void checkSeatSectionEqual(List<SeatCountDto> seatCounts, List<SeatPriceDto> seatPrice) {
+        Set<String> sectionSet = seatCounts.stream().map(SeatCountDto::getSection).collect(Collectors.toSet());
+        Set<String> requestSections = seatPrice.stream().map(SeatPriceDto::getSeatSection).collect(Collectors.toSet());
+
+        if (!sectionSet.equals(requestSections)) {
+            throw new SeatSectionUnmatchedException();
+        }
+    }
+
     private void requestTicketGenerate(Long showId,
                                        List<SeatPriceDto> seatPrices, List<SeatCountDto> seatCounts) {
+
         Map<String, Long> seatCountMap = new HashMap<>();
         seatCounts.forEach(seatCount -> seatCountMap.put(seatCount.getSection(), seatCount.getCount()));
 
