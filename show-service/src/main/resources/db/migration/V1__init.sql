@@ -17,8 +17,6 @@ CREATE TABLE venue (
 
 CREATE TABLE seat (
                       id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-                      created_time DATETIME(6) NOT NULL,
-                      updated_time DATETIME(6) NOT NULL,
                       venue_id     BIGINT       NOT NULL,
                       number       INT          NULL,
                       section      VARCHAR(100) NULL,

@@ -32,7 +32,7 @@ public class VenueController {
 
     @GetMapping("/search")
     @AllowedAuthority(UserRole.Authority.ADMIN)
-    public ResponseEntity<VenuePageResponse> findVenue(@RequestParam String keyword, Pageable pageable) {
+    public ResponseEntity<VenuePageResponse> findVenue(@RequestParam(defaultValue = "") String keyword, Pageable pageable) {
         return ResponseEntity.ok(venueService.findVenue(keyword, pageable));
     }
 

@@ -45,6 +45,7 @@ public class VenueService {
     }
 
     public VenuePageResponse findVenue(String keyword, Pageable pageable) {
+        System.out.println("keyword = " + keyword);
         Page<Venue> venuePage = venueRepository.findVenueByKeyword(keyword, pageable);
         return VenuePageResponse.from(venuePage);
     }
