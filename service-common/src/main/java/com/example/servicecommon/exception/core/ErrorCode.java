@@ -15,6 +15,8 @@ public enum ErrorCode {
 
     EMAIL_NOT_VERIFIED(400, "이메일 인증이 되어있지 않습니다."),
 
+    DUPLICATED_EMAIL(409, "이미 가입된 이메일입니다."),
+
     NOT_FOUND(404, "해당 %s을 찾을 수 없습니다."),
 
     ACCESS_DENIED(403, "권한이 부족합니다."),

@@ -7,6 +7,7 @@ import com.example.userservice.user.domain.JoinVerification;
 import com.example.userservice.user.domain.User;
 import com.example.userservice.user.dto.UserInfoResponse;
 import com.example.userservice.user.dto.JoinRequest;
+import com.example.userservice.user.exception.DuplicatedEmailException;
 import com.example.userservice.user.exception.EmailNotVerifiedException;
 import com.example.userservice.user.exception.VerifyExpiredException;
 import com.example.userservice.user.repository.JoinVerificationRepository;
@@ -40,6 +41,10 @@ public class UserService {
                 .phoneNumber(AesUtil.encode(joinRequest.getPhoneNumber()))
                 .userRole(UserRole.USER)
                 .build();
+
+        if (userRepository.existsUserByEmail(user.getEmail())) {
+            throw new DuplicatedEmailException();
+        }
 
         userRepository.save(user);
         return UserInfoResponse.from(user);
