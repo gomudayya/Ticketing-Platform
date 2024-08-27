@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.example.showservice.show.domain.QVenue.venue;
+import static com.example.showservice.venue.domain.QVenue.venue;
 
 
 @RequiredArgsConstructor

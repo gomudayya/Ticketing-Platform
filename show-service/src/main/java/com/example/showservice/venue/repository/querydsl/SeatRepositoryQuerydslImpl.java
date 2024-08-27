@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.example.showservice.show.domain.QSeat.seat;
+import static com.example.showservice.venue.domain.QSeat.seat;
+
 
 @RequiredArgsConstructor
 public class SeatRepositoryQuerydslImpl implements SeatRepositoryQuerydsl{

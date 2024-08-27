@@ -24,7 +24,7 @@ CREATE TABLE ticket (
                         updated_time  DATETIME(6) NOT NULL,
                         user_id       BIGINT      NULL,
                         price         INT         NULL,
-                        code          VARCHAR(255) NULL,
+                        code          VARCHAR(255) NULL UNIQUE,
                         is_deleted    BIT         NOT NULL DEFAULT 0,
                         ticket_status ENUM('AVAILABLE', 'SELECTED', 'SOLD') NULL
 );
