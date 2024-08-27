@@ -1,15 +1,26 @@
 package com.example.servicecommon.exception.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception e) {
+        e.printStackTrace();
+
+        return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
+                .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
 
     @ExceptionHandler(HttpMessageConversionException.class)
     public ResponseEntity<ExceptionResponse> handleHttpMessageConversionException(HttpMessageConversionException e) {

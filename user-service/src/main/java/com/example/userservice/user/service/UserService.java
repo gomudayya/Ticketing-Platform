@@ -34,17 +34,18 @@ public class UserService {
             throw new EmailNotVerifiedException(); // 이메일 인증이 되어있지 않으면 예외 발생
         }
 
+        String encodedEmail = AesUtil.encode(joinRequest.getEmail());
+        if (userRepository.existsByEmail(encodedEmail)) {
+            throw new DuplicatedEmailException();
+        }
+
         User user = User.builder()
-                .email(AesUtil.encode(joinRequest.getEmail()))
+                .email(encodedEmail)
                 .password(passwordEncoder.encode(joinRequest.getPassword()))
                 .name(AesUtil.encode(joinRequest.getName()))
                 .phoneNumber(AesUtil.encode(joinRequest.getPhoneNumber()))
                 .userRole(UserRole.USER)
                 .build();
-
-        if (userRepository.existsUserByEmail(user.getEmail())) {
-            throw new DuplicatedEmailException();
-        }
 
         userRepository.save(user);
         return UserInfoResponse.from(user);

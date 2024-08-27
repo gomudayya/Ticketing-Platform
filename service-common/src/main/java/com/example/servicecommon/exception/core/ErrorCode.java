@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    INTERNAL_SERVER_ERROR(500, "서버에서 예기치 못한 에러가 발생하였습니다."),
 
     INVALID_INPUT_FORMAT(400, "올바르지 않은 입력포맷입니다."),
 
@@ -29,7 +30,8 @@ public enum ErrorCode {
 
     TICKET_ALREADY_SELECTED(409, "해당 티켓은 이미 선택되었거나, 구매된 티켓입니다."),
 
-    INVALID_PAYMENT(400, "결제 정보가 올바르지 않습니다.")
+    INVALID_PAYMENT(400, "결제 정보가 올바르지 않습니다."),
+
     ;
 
     private final int statusCode;
