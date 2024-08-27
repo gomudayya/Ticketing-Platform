@@ -1,6 +1,7 @@
 package com.example.showservice.venue.service;
 
 import com.example.servicecommon.exception.NotFoundException;
+import com.example.showservice.show.dto.SeatCountDto;
 import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.venue.dto.VenueCreateRequest;
 import com.example.showservice.venue.dto.VenueDetailResponse;
@@ -12,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,8 +23,10 @@ public class VenueService {
     private final VenueRepository venueRepository;
     private final SeatService seatService;
     public VenueDetailResponse createVenue(VenueCreateRequest request) {
-        Map<String, Integer> seatCountDetails = request.getSeatCountDetails(); // <Section, 해당 Section 의 좌석갯수>
-        int seatCount = seatCountDetails.values().stream().mapToInt(n -> n).sum();
+        List<SeatCountDto> seatCountDetails = request.getSeatCount();// <Section, 해당 Section 의 좌석갯수>
+        int seatCount = (int) seatCountDetails.stream()
+                .mapToLong(SeatCountDto::getCount)
+                .sum();
 
         Venue venue = Venue.builder()
                 .venueName(request.getVenueName())
@@ -45,7 +48,6 @@ public class VenueService {
     }
 
     public VenuePageResponse findVenue(String keyword, Pageable pageable) {
-        System.out.println("keyword = " + keyword);
         Page<Venue> venuePage = venueRepository.findVenueByKeyword(keyword, pageable);
         return VenuePageResponse.from(venuePage);
     }

@@ -1,5 +1,6 @@
 package com.example.showservice.show.domain;
 
+import com.example.showservice.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class ShowSeat {
+public class ShowSeat extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
