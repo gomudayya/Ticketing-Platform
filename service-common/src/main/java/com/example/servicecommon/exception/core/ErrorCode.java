@@ -8,6 +8,8 @@ import lombok.Getter;
 public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "서버에서 예기치 못한 에러가 발생하였습니다."),
 
+    NOT_SUPPORTED_HTTP_METHOD(400, "지원하지 않는 HTTP 메서드 입니다."),
+
     INVALID_INPUT_FORMAT(400, "올바르지 않은 입력포맷입니다."),
 
     VERIFY_EXPIRED(401, "인증이 만료되었습니다."),

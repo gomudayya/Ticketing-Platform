@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,6 +21,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
                 .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ExceptionResponse> handleRequestMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+        printExceptionLog(e);
+
+        return ResponseEntity.status(ErrorCode.NOT_SUPPORTED_HTTP_METHOD.getStatusCode())
+                .body(ExceptionResponse.of(ErrorCode.NOT_SUPPORTED_HTTP_METHOD));
     }
 
     @ExceptionHandler(HttpMessageConversionException.class)
