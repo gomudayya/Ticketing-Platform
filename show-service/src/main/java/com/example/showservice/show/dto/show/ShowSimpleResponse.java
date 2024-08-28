@@ -30,7 +30,7 @@ public class ShowSimpleResponse {
                 .performer(show.getPerformer())
                 .title(show.getTitle())
                 .titleImage(show.getTitleImage())
-                .ticketingTime(show.getTicketingTime())
+                .ticketingTime(show.getTicketOpenTime())
                 .startDate(show.getStartTime())
                 .duration(show.getDuration())
                 .showStatus(show.getShowStatus())

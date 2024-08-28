@@ -31,7 +31,7 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
                         containsGenre(condition.getGenre()),
                         statusFilter(condition.getShowStatus())
                 )
-                .orderBy(show.ticketingTime.asc())
+                .orderBy(show.ticketOpenTime.asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1) // 무한스크롤 방식은 한개 더 받아옴
                 .fetch();
@@ -71,7 +71,7 @@ public class ShowRepositoryQuerydslImpl implements ShowRepositoryQuerydsl {
     }
 
     private BooleanExpression isBeforeTicketOpen(LocalDateTime now) {
-        return show.ticketingTime.gt(now); // 티켓팅시간이 현재시간보다 이후이다.
+        return show.ticketOpenTime.gt(now); // 티켓팅시간이 현재시간보다 이후이다.
     }
 
     private BooleanExpression isTicketSaleEnded(LocalDateTime now) {

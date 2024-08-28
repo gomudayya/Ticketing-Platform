@@ -48,20 +48,20 @@ public class Show extends BaseTimeEntity {
     private String performer;
     private String title;
     private String titleImage;
-    private LocalDateTime ticketingTime;
+    private LocalDateTime ticketOpenTime;
     private LocalDateTime startTime;
     private Integer duration; // 공연시간 (분)
     private boolean isDeleted = false;
 
     @Builder
     public Show(Genre genre, Venue venue, String performer, String title, String titleImage,
-                LocalDateTime ticketingTime, LocalDateTime startTime, Integer duration) {
+                LocalDateTime ticketOpenTime, LocalDateTime startTime, Integer duration) {
         this.genre = genre;
         this.venue = venue;
         this.performer = performer;
         this.title = title;
         this.titleImage = titleImage;
-        this.ticketingTime = ticketingTime;
+        this.ticketOpenTime = ticketOpenTime;
         this.startTime = startTime;
         this.duration = duration;
     }
@@ -75,7 +75,7 @@ public class Show extends BaseTimeEntity {
     public ShowStatus getShowStatus() {
         LocalDateTime now = LocalDateTime.now();
 
-        if (now.isBefore(ticketingTime)) {
+        if (now.isBefore(ticketOpenTime)) {
             return ShowStatus.BEFORE_TICKET_OPEN;
         }
         if (now.isAfter(startTime.minusHours(PURCHASE_DEADLINE_HOURS_BEFORE_SHOW))) {

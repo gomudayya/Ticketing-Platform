@@ -37,9 +37,9 @@ public class ShowCreateRequest {
     private String titleImage; // 후.. 원래는 이미지 파일로 올려야 하는데 일단은... 요렇게하자.
 
     @NotNull(message = "티켓 오픈 시간은 필수 항목입니다.")
-    private LocalDateTime ticketingTime;
+    private LocalDateTime ticketOpenTime;
 
-    @NotNull(message = "공연 시작 날짜는 필수 항목입니다.")
+    @NotNull(message = "공연 시작 시간은 필수 항목입니다.")
     private LocalDateTime startDate;
 
     @NotNull(message = "공연 시간(분)은 필수 항목입니다.")
@@ -55,7 +55,7 @@ public class ShowCreateRequest {
                 .title(title)
                 .performer(performer)
                 .titleImage(titleImage)
-                .ticketingTime(ticketingTime)
+                .ticketOpenTime(ticketOpenTime)
                 .startTime(startDate)
                 .duration(duration)
                 .build();
