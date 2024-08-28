@@ -5,7 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,13 +17,22 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception e) {
-        e.printStackTrace();
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception e) {
+//        e.printStackTrace();
+//
+//        return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
+//                .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
+//    }
 
-        return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
-                .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<ExceptionResponse> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        printExceptionLog(e);
+
+        return ResponseEntity.status(ErrorCode.NOT_SUPPORTED_CONTENT_TYPE.getStatusCode())
+                .body(ExceptionResponse.of(ErrorCode.NOT_SUPPORTED_CONTENT_TYPE));
     }
+
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ExceptionResponse> handleRequestMethodNotSupported(HttpRequestMethodNotSupportedException e) {
@@ -43,8 +54,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleBindException(BindException e) {
         printExceptionLog(e);
 
+        String bindingErrorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        ErrorCode errorCode = ErrorCode.INVALID_INPUT_FORMAT;
+
         return ResponseEntity.badRequest()
-                .body(ExceptionResponse.of(ErrorCode.INVALID_INPUT_FORMAT));
+                .body(ExceptionResponse.of(errorCode.getStatusCode(), errorCode.name(), bindingErrorMessage));
     }
 
     @ExceptionHandler(CustomException.class)
