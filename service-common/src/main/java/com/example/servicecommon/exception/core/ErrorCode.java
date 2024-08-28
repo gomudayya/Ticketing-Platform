@@ -37,9 +37,5 @@ public enum ErrorCode {
     ;
 
     private final int statusCode;
-    private String msg;
-
-    public void changeMsg(String msg) {
-        this.msg = msg;
-    }
+    private final String msg;
 }

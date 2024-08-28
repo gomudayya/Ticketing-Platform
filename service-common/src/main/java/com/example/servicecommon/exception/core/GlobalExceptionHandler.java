@@ -34,13 +34,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleBindException(BindException e) {
         printExceptionLog(e);
 
-        String defaultMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-
-        ErrorCode errorCode = ErrorCode.INVALID_INPUT_FORMAT;
-        errorCode.changeMsg(defaultMessage);
-
         return ResponseEntity.badRequest()
-                .body(ExceptionResponse.of(errorCode));
+                .body(ExceptionResponse.of(ErrorCode.INVALID_INPUT_FORMAT));
     }
 
     @ExceptionHandler(CustomException.class)
