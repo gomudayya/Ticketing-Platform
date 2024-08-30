@@ -28,11 +28,9 @@ public enum ErrorCode {
 
     INVALID_ADMIN_KEY(401, "어드민 키가 올바르지 않습니다"),
 
-    TICKET_SALE_NOT_ACTIVE(400, "현재는 티켓 판매 시간이 아닙니다"),
+    TICKET_SALE_NOT_ACTIVE(400, "현재는 티켓 판매/환불 시간이 아닙니다"),
 
     SEAT_SECTION_UNMATCHED(400, "좌석 구획 정보가 실제 좌석 정보와 일치하지 않습니다."),
-
-    TICKET_REFUND_NOT_ACTIVE(400, "현재는 환불 가능 시간이 아닙니다."),
 
     TICKET_UNAVAILABLE(409, "해당 티켓은 이미 선택되었거나, 구매된 티켓입니다."),
 

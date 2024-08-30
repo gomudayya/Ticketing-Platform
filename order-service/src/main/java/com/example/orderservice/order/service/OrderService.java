@@ -9,7 +9,6 @@ import com.example.orderservice.order.dto.OrderDetailsResponse;
 import com.example.orderservice.order.dto.OrderPageResponse;
 import com.example.orderservice.order.dto.SeatDto;
 import com.example.orderservice.order.exception.TicketUnavailableException;
-import com.example.orderservice.order.exception.TicketRefundNotActiveException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
 import com.example.orderservice.order.repository.OrderRepository;
 import com.example.orderservice.ticket.domain.Ticket;
@@ -17,8 +16,8 @@ import com.example.orderservice.ticket.service.TicketCacheService;
 import com.example.orderservice.ticket.service.TicketService;
 import com.example.servicecommon.exception.CustomAccessDeniedException;
 import com.example.servicecommon.exception.NotFoundException;
-import io.lettuce.core.RedisException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -41,10 +41,7 @@ public class OrderService {
         ShowSimpleResponse show = showServiceClient.getShow(showId);
         checkTicketSaleTime(show);
 
-        List<String> ticketCodes = seats.stream()
-                .map(seat -> String.format("%s_%s_%s", showId, seat.getSection(), seat.getNumber()))
-                .collect(Collectors.toList());
-
+        List<String> ticketCodes = extractTicketCodes(showId, seats);
         List<Ticket> tickets = findTicketsToOrder(showId, ticketCodes);
 
         tickets.forEach(ticket -> ticket.isSelectedBy(userId));
@@ -63,6 +60,12 @@ public class OrderService {
         }
     }
 
+    private List<String> extractTicketCodes(Long showId, List<SeatDto> seats) {
+        return seats.stream()
+                .map(seat -> Ticket.makeCode(showId, seat.getSection(), seat.getNumber()))
+                .collect(Collectors.toList());
+    }
+
     private List<Ticket> findTicketsToOrder(Long showId, List<String> ticketCodes) {
         try {
             if (!ticketCacheService.isTicketsAvailable(showId, ticketCodes)) {
@@ -70,8 +73,8 @@ public class OrderService {
             }
 
             return ticketService.findTickets(ticketCodes); // 레디스에서 Race-Condition 처리가 끝났으면 락 없이 조회.
-        } catch (RedisException e) {
-            return ticketService.findTicketsWithRock(ticketCodes); // 레디스에서 에러가 터졌으면 비관적락을 이용해 조회한다.
+        } catch (Exception e) {
+            return ticketService.findTicketsWithRock(ticketCodes); // 레디스에서 로직에서 터졌으면 비관적락을 이용해 조회한다.
         }
     }
 
@@ -94,9 +97,7 @@ public class OrderService {
     public OrderDetailsResponse refundOrder(Long userId, Long orderId) {
         Order order = findOrder(userId, orderId);
         ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
-        if (show.getShowStatus() != ShowStatus.TICKET_SALE_ACTIVE) {
-            throw new TicketRefundNotActiveException();
-        }
+        checkTicketSaleTime(show);
 
         order.cancel();
         return OrderDetailsResponse.from(order, show);
