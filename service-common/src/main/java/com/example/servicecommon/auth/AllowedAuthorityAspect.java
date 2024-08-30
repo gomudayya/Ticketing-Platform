@@ -29,8 +29,6 @@ public class AllowedAuthorityAspect {
         }
 
         List<String> userAuthorities = UserRole.valueOf(request.getHeader(CustomHeader.USER_ROLE)).getAuthorities();
-        log.info("User Authorities: {}", String.join(", ", userAuthorities));
-
         for (String allowedAuth : allowedAuthority.value()) {
             if (userAuthorities.contains(allowedAuth)) {
                 return;

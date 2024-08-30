@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TicketRepositoryQuerydsl {
 
-    List<TicketStatusDto> findTicketStatus(Long showId, String section);
+    List<TicketStatusDto> findTicketStatuses(Long showId);
 }

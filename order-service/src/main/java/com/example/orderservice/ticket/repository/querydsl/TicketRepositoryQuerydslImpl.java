@@ -16,7 +16,7 @@ public class TicketRepositoryQuerydslImpl implements TicketRepositoryQuerydsl{
 
     private final JPAQueryFactory queryFactory;
     @Override
-    public List<TicketStatusDto> findTicketStatus(Long showId, String section) {
+    public List<TicketStatusDto> findTicketStatuses(Long showId) {
         return queryFactory
                 .select(Projections.bean(
                         TicketStatusDto.class,
@@ -24,7 +24,7 @@ public class TicketRepositoryQuerydslImpl implements TicketRepositoryQuerydsl{
                         ticket.ticketStatus.as("ticketStatus")
                 ))
                 .from(ticket)
-                .where(ticket.code.startsWith(String.valueOf(showId).concat("_").concat(section).concat("_")))
+                .where(ticket.code.startsWith(String.valueOf(showId).concat("_")))
                 .fetch();
     }
 }

@@ -22,17 +22,16 @@ class TicketRepositoryTest {
 
 
     @Test
-    @DisplayName("공연id와 좌석 section 정보를 이용해 티켓을 조회할 때 올바르게 반환하는지 테스트 한다.")
+    @DisplayName("공연id와 정보를 이용해 티켓을 조회할 때 올바르게 반환하는지 테스트 한다.")
     void findTicketSelectionInfo() {
         //given
         Long showId = 7L;
-        String seatSection = "A";
 
         //when
-        List<TicketStatusDto> findTickets = ticketRepository.findTicketStatus(showId, seatSection);
+        List<TicketStatusDto> findTickets = ticketRepository.findTicketStatuses(showId);
 
         //then
-        String ticketCodePrefix = String.format("%d_%s_", showId, seatSection);
+        String ticketCodePrefix = String.format("%d_", showId);
         findTickets.forEach(ticket -> assertThat(ticket.getTicketCode()).startsWith(ticketCodePrefix));
     }
 }

@@ -2,7 +2,7 @@ package com.example.orderservice.order.service;
 
 import com.example.orderservice.client.showservice.ShowServiceClient;
 import com.example.orderservice.order.dto.SeatDto;
-import com.example.orderservice.order.exception.TicketAlreadySelectedException;
+import com.example.orderservice.order.exception.TicketUnavailableException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
 import com.example.orderservice.ticket.domain.Ticket;
 import com.example.orderservice.ticket.repository.TicketRepository;
@@ -75,7 +75,7 @@ class OrderServiceTest {
                     try {
                         orderService.orderTickets(finalUserId, showId, List.of(new SeatDto(seatSection, seatNumber))); // 여기서 예외 발생
                         successfulReservations.incrementAndGet();
-                    } catch (TicketAlreadySelectedException e) {
+                    } catch (TicketUnavailableException e) {
                         failedReservations.incrementAndGet();
                     } finally {
                         latch.countDown();

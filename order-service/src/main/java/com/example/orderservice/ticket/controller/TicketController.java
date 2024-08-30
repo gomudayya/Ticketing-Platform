@@ -33,9 +33,8 @@ public class TicketController {
 
     @GetMapping("/availability")
     @AllowedAuthority(UserRole.Authority.USER)
-    public ResponseEntity<?> getTicketsSelectionStatus(@RequestParam @NotNull Long showId,
-                                                  @RequestParam @NotNull String seatSection) {
-        TicketAvailableResponse ticketsSelectionStatus = ticketService.getTicketsSelectionStatus(showId, seatSection);
+    public ResponseEntity<?> getTicketStatuses(@RequestParam @NotNull Long showId) {
+        TicketAvailableResponse ticketsSelectionStatus = ticketService.getTicketStatuses(showId);
         return ResponseEntity.ok(ticketsSelectionStatus);
     }
 }

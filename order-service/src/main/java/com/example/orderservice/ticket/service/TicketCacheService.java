@@ -1,44 +1,72 @@
 package com.example.orderservice.ticket.service;
 
-import com.example.orderservice.order.dto.SeatDto;
-import com.example.orderservice.ticket.domain.CachedTicket;
 import com.example.orderservice.ticket.domain.Ticket;
-import com.example.orderservice.ticket.repository.TicketCacheRepository;
 import com.example.orderservice.ticket.repository.TicketRepository;
-import com.example.servicecommon.exception.NotFoundException;
+import com.example.orderservice.ticket.repository.TicketStatusRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Slf4j
 @RequiredArgsConstructor
 public class TicketCacheService {
-    private final TicketCacheRepository ticketCacheRepository;
     private final TicketRepository ticketRepository;
+    private final TicketStatusRepository ticketStatusRepository; // cache (redis) 저장소
+    private static final String CHECK_TICKET_STATUS_AND_SELECT_SCRIPT =
+            """
+                    local showId = KEYS[1]
+                    local ticketCodes = ARGV
+                    
+                    for i, code in ipairs(ticketCodes) do
+                        local status = redis.call('HGET', showId, code)
+                        
+                        if not status then
+                            error("Ticket " .. code .. " does not exist or status is nil.")
+                        end
+                        
+                        if status ~= "AVAILABLE" then
+                            return 0
+                        end
+                    end
+                    
+                    for i, code in ipairs(ticketCodes) do
+                        redis.call('HSET', showId, code, "SELECTED")
+                    end
+                    
+                    return 1
+            """;
 
 
 
-    // (티켓팅 시간이 임박한) 티켓들을 Redis에 캐싱한다.
+
+    // (티켓팅 시간이 임박한) 티켓들을 캐싱한다.
     public void cacheTickets(Long showId) {
         List<Ticket> tickets = ticketRepository.findTicketByShowId(showId);
-        List<CachedTicket> cachedTickets = tickets.stream()
-                .map(CachedTicket::from)
-                .toList();
+        Map<String, String> ticketStatuses = tickets.stream()
+                .collect(Collectors.toMap(Ticket::getCode, ticket -> ticket.getTicketStatus().name())); // <티켓코드, 티켓상태>
 
-        ticketCacheRepository.saveAll(cachedTickets);
+        ticketStatusRepository.save(showId, ticketStatuses);
     }
 
-    public List<CachedTicket> findCachedTickets(Long showId, List<SeatDto> seats) {
-        List<CachedTicket> cachedTickets = new ArrayList<>();
-        for (SeatDto seat : seats) {
-            String ticketCode = Ticket.makeCode(showId, seat.getSection(), seat.getNumber());
-            ticketCacheRepository.findById(ticketCode).ifPresent(cachedTickets::add);
-        }
+    public Map<String, String> getTicketStatuses(Long showId) {
+        return ticketStatusRepository.findAll(showId);
+    }
 
-        return cachedTickets;
+    public boolean isTicketsAvailable(Long showId, List<String> ticketCodes) {
+        RedisScript<Boolean> redisScript = RedisScript.of(CHECK_TICKET_STATUS_AND_SELECT_SCRIPT, Boolean.class);
+        log.info("레디스에서 티켓 Availability 체크");
+
+        return ticketStatusRepository.evalScript(
+                redisScript,
+                new ArrayList<>(List.of(showId.toString())),
+                ticketCodes.toArray()
+        );
     }
 }

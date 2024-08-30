@@ -8,15 +8,16 @@ import com.example.orderservice.order.domain.OrderTicket;
 import com.example.orderservice.order.dto.OrderDetailsResponse;
 import com.example.orderservice.order.dto.OrderPageResponse;
 import com.example.orderservice.order.dto.SeatDto;
+import com.example.orderservice.order.exception.TicketUnavailableException;
 import com.example.orderservice.order.exception.TicketRefundNotActiveException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
 import com.example.orderservice.order.repository.OrderRepository;
-import com.example.orderservice.ticket.domain.CachedTicket;
 import com.example.orderservice.ticket.domain.Ticket;
 import com.example.orderservice.ticket.service.TicketCacheService;
 import com.example.orderservice.ticket.service.TicketService;
 import com.example.servicecommon.exception.CustomAccessDeniedException;
 import com.example.servicecommon.exception.NotFoundException;
+import io.lettuce.core.RedisException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,34 +37,22 @@ public class OrderService {
     private final ShowServiceClient showServiceClient;
     private final TicketCacheService ticketCacheService;
 
-    /**
-     * 사용자가 좌석을 고르고, 결제하기 버튼을 누르면 티켓이 selected 상태가 된다.
-     * selected 상태일 때 다른 사용자가 주문할 수 없다.
-     *
-     * 이후에 사용자가 성공적으로 결제를 완료하면 티켓은 sold 상태가 된다.
-     * 사용자가 결제를 실패하면 티켓은 available 상태가 된다.
-     */
     public OrderDetailsResponse orderTickets(Long userId, Long showId, List<SeatDto> seats) {
         ShowSimpleResponse show = showServiceClient.getShow(showId);
         checkTicketSaleTime(show);
 
-//        // 1. 먼저 캐시저장소를 찔러 본다.
-//        List<CachedTicket> cachedTickets = ticketCacheService.findCachedTickets(showId, seats);
-//        if (alreadyReserved(cachedTickets)) {
-//            throw new TicketAlreadyReservedException();
-//        }
-//
-//        if (cachedTickets.size() == seats.size()) { // 주문할 티켓들이 모두 캐시되어있을 경우 (캐싱이 아직 만료되지 않은 경우)
-////            cachedTickets.forEach();
-//        }
+        List<String> ticketCodes = seats.stream()
+                .map(seat -> String.format("%s_%s_%s", showId, seat.getSection(), seat.getNumber()))
+                .collect(Collectors.toList());
 
-        List<Ticket> tickets = ticketService.findTicketsWithRock(showId, seats);
+        List<Ticket> tickets = findTicketsToOrder(showId, ticketCodes);
+
         tickets.forEach(ticket -> ticket.isSelectedBy(userId));
-
         List<OrderTicket> orderTickets = tickets.stream().map(OrderTicket::createOrderTicket).toList();
 
         Order order = Order.createOrder(userId, showId, orderTickets);
         orderRepository.save(order);
+
         return OrderDetailsResponse.from(order, show);
     }
 
@@ -73,9 +63,16 @@ public class OrderService {
         }
     }
 
-    private boolean alreadyReserved(List<CachedTicket> cachedTickets) {
-        return cachedTickets.stream()
-                .anyMatch(CachedTicket::isReserved);
+    private List<Ticket> findTicketsToOrder(Long showId, List<String> ticketCodes) {
+        try {
+            if (!ticketCacheService.isTicketsAvailable(showId, ticketCodes)) {
+                throw new TicketUnavailableException(); // 모든 티켓이 Available 하지 않으면 예외 발생
+            }
+
+            return ticketService.findTickets(ticketCodes); // 레디스에서 Race-Condition 처리가 끝났으면 락 없이 조회.
+        } catch (RedisException e) {
+            return ticketService.findTicketsWithRock(ticketCodes); // 레디스에서 에러가 터졌으면 비관적락을 이용해 조회한다.
+        }
     }
 
     @Transactional(readOnly = true)

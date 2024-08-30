@@ -1,7 +1,7 @@
 package com.example.orderservice.ticket.domain;
 
 import com.example.orderservice.global.domain.BaseTimeEntity;
-import com.example.orderservice.order.exception.TicketAlreadySelectedException;
+import com.example.orderservice.order.exception.TicketUnavailableException;
 import com.example.orderservice.ticket.constant.TicketStatus;
 import com.example.servicecommon.exception.CustomAccessDeniedException;
 import jakarta.persistence.Entity;
@@ -51,7 +51,7 @@ public class Ticket extends BaseTimeEntity {
 
     public void isSelectedBy(Long userId) {
         if (ticketStatus != TicketStatus.AVAILABLE) {
-            throw new TicketAlreadySelectedException();
+            throw new TicketUnavailableException();
         }
 
         this.userId = userId;

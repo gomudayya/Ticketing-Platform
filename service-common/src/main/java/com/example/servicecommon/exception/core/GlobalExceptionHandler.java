@@ -17,13 +17,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception e) {
-//        e.printStackTrace();
-//
-//        return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
-//                .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception e) {
+        e.printStackTrace();
+
+        return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatusCode())
+                .body(ExceptionResponse.of(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<ExceptionResponse> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {

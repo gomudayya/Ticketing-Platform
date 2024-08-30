@@ -11,4 +11,8 @@ import lombok.ToString;
 public class TicketStatusDto {
     private String ticketCode;
     private TicketStatus ticketStatus;
+
+    public String getTicketStatusByString() {
+        return ticketStatus.name();
+    }
 }
