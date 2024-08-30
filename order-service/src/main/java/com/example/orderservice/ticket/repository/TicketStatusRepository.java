@@ -32,13 +32,12 @@ public class TicketStatusRepository {
         return template.execute(redisScript, addPrefix(keys), args);
     }
 
-    public String addPrefix(Object key) {
+    private String addPrefix(Object key) {
         return KEY_PREFIX + key;
     }
-    public List<String> addPrefix(List<String> keys) {
+    private List<String> addPrefix(List<String> keys) {
         return keys.stream()
                 .map(this::addPrefix)
                 .collect(Collectors.toList());
     }
-
 }

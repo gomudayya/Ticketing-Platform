@@ -67,15 +67,20 @@ public class OrderService {
     }
 
     private List<Ticket> findTicketsToOrder(Long showId, List<String> ticketCodes) {
-        try {
-            if (!ticketCacheService.isTicketsAvailable(showId, ticketCodes)) {
-                throw new TicketUnavailableException(); // 모든 티켓이 Available 하지 않으면 예외 발생
-            }
+        boolean ticketsAvailable;
 
-            return ticketService.findTickets(ticketCodes); // 레디스에서 Race-Condition 처리가 끝났으면 락 없이 조회.
+        try {
+            ticketsAvailable = ticketCacheService.isTicketsAvailable(showId, ticketCodes); //레디스에서 모든 티켓이 'AVAILABLE' 하다면 상태를 'SELECTED' 로변경한다
         } catch (Exception e) {
-            return ticketService.findTicketsWithRock(ticketCodes); // 레디스에서 로직에서 터졌으면 비관적락을 이용해 조회한다.
+            log.error(e.getCause().getMessage());
+            return ticketService.findTicketsWithRock(ticketCodes);  // 레디스 접근에 문제가 발생했으면 비관적락을 이용해 조회한다.
         }
+        
+        if (!ticketsAvailable) {
+            throw new TicketUnavailableException(); // 모든 티켓이 Available 하지 않다면 예외가 발생한다.
+        }
+
+        return ticketService.findTickets(ticketCodes); // 레디스에서 Race-Condition 제어를 마쳤으므로 락 없이 조회한다.
     }
 
     @Transactional(readOnly = true)
