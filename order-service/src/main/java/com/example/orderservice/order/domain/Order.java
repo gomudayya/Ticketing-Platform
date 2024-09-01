@@ -29,7 +29,7 @@ public class Order extends BaseTimeEntity {
 
     private Long showId;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     private List<OrderTicket> orderTickets = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

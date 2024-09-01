@@ -1,5 +1,6 @@
 package com.example.orderservice.ticket.repository;
 
+import com.example.orderservice.ticket.constant.TicketStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,7 +19,7 @@ public class TicketStatusRepository {
     private final RedisTemplate<String, Object> template;
     private final String KEY_PREFIX = "TICKET_STATUS:";
 
-    public void save(Long showId, Map<String, String> ticketStatuses) {
+    public void saveAll(Long showId, Map<String, String> ticketStatuses) {
         template.opsForHash()
                 .putAll(addPrefix(showId), ticketStatuses);
     }
@@ -35,6 +36,7 @@ public class TicketStatusRepository {
     private String addPrefix(Object key) {
         return KEY_PREFIX + key;
     }
+
     private List<String> addPrefix(List<String> keys) {
         return keys.stream()
                 .map(this::addPrefix)

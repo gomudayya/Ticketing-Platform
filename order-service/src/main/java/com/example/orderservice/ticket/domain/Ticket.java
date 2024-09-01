@@ -35,7 +35,6 @@ public class Ticket extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus = TicketStatus.AVAILABLE;
     private boolean isDeleted = false;
-
     protected Ticket() {
     }
 
@@ -86,7 +85,6 @@ public class Ticket extends BaseTimeEntity {
     }
 
     public boolean isOwnedBy(Long userId) {
-        if (this.userId == null) return false;
         return this.userId.equals(userId);
     }
 }

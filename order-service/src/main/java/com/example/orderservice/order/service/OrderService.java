@@ -73,7 +73,7 @@ public class OrderService {
             ticketsAvailable = ticketCacheService.isTicketsAvailable(showId, ticketCodes); //레디스에서 모든 티켓이 'AVAILABLE' 하다면 상태를 'SELECTED' 로변경한다
         } catch (Exception e) {
             log.error(e.getCause().getMessage());
-            return ticketService.findTicketsWithRock(ticketCodes);  // 레디스 접근에 문제가 발생했으면 비관적락을 이용해 조회한다.
+            return ticketService.findTicketsWithRock(ticketCodes);  // 레디스 캐시되어있지 않거나, 접근에 문제가 발생했으면 비관적락을 이용해 조회한다.
         }
         
         if (!ticketsAvailable) {

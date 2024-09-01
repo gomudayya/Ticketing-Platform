@@ -52,7 +52,7 @@ public class TicketCacheService {
         Map<String, String> ticketStatuses = tickets.stream()
                 .collect(Collectors.toMap(Ticket::getCode, ticket -> ticket.getTicketStatus().name())); // <티켓코드, 티켓상태>
 
-        ticketStatusRepository.save(showId, ticketStatuses);
+        ticketStatusRepository.saveAll(showId, ticketStatuses);
     }
 
     public Map<String, String> getTicketStatuses(Long showId) {
@@ -61,7 +61,6 @@ public class TicketCacheService {
 
     public boolean isTicketsAvailable(Long showId, List<String> ticketCodes) {
         RedisScript<Boolean> redisScript = RedisScript.of(CHECK_TICKET_STATUS_AND_SELECT_SCRIPT, Boolean.class);
-        log.info("레디스에서 티켓 Availability 체크");
 
         return ticketStatusRepository.evalScript(
                 redisScript,

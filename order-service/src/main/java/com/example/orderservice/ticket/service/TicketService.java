@@ -2,12 +2,10 @@ package com.example.orderservice.ticket.service;
 
 import com.example.orderservice.client.showservice.ShowServiceClient;
 import com.example.orderservice.client.showservice.dto.ShowSimpleResponse;
-import com.example.orderservice.order.dto.SeatDto;
-import com.example.orderservice.ticket.constant.TicketStatus;
 import com.example.orderservice.ticket.domain.Ticket;
+import com.example.orderservice.ticket.dto.TicketAvailableResponse;
 import com.example.orderservice.ticket.dto.TicketCreateRequest;
 import com.example.orderservice.ticket.dto.TicketDetailResponse;
-import com.example.orderservice.ticket.dto.TicketAvailableResponse;
 import com.example.orderservice.ticket.repository.TicketRepository;
 import com.example.orderservice.ticket.repository.dto.TicketStatusDto;
 import com.example.servicecommon.exception.CustomAccessDeniedException;
@@ -17,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
