@@ -29,6 +29,7 @@ dependencies {
 
     //test DB
     runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.testcontainers:testcontainers' // for redis test
 
     //flyway
     implementation 'org.flywaydb:flyway-mysql'
