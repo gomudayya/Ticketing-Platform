@@ -4,11 +4,12 @@ import com.example.orderservice.client.showservice.ShowServiceClient;
 import com.example.orderservice.order.dto.SeatDto;
 import com.example.orderservice.order.exception.TicketUnavailableException;
 import com.example.orderservice.order.repository.OrderRepository;
+import com.example.orderservice.testutil.database.DatabaseCleaner;
+import com.example.orderservice.testutil.redis.RedisTestUtil;
 import com.example.orderservice.ticket.constant.TicketStatus;
 import com.example.orderservice.ticket.domain.Ticket;
 import com.example.orderservice.ticket.repository.TicketRepository;
 import com.example.orderservice.ticket.repository.TicketStatusRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -50,22 +51,17 @@ class OrderServiceConcurrencyTest {
     OrderRepository orderRepository;
 
     @Autowired
-    RedisTemplate<String, Object> redisTemplate;
+    RedisTestUtil redisTestUtil;
 
+    @Autowired
+    DatabaseCleaner databaseCleaner;
     @Nested
     @DisplayName("티켓 주문 동시성 테스트")
     class orderTickets {
         @AfterEach
         void cleanData() {
-            redisTemplate.getConnectionFactory().getConnection().serverCommands().flushDb();
-            orderRepository.deleteAll();
-            ticketRepository.deleteAll();
-
-            orderRepository.flush();
-            ticketRepository.flush();
-
-            List<Ticket> all = ticketRepository.findAll();
-            System.out.println("AfterEach ------ all.size() = " + all.size());
+            redisTestUtil.cleanAll();
+            databaseCleaner.cleanAll();
         }
 
         @Test
@@ -119,17 +115,8 @@ class OrderServiceConcurrencyTest {
         @Test
         @DisplayName("(DB 비관적락) 같은 티켓에 대한 주문이 여러개 왔을 때, 처리되는 주문은 가장 먼저온 주문이어야 하고 나머지는 예외가 발생해야 한다.")
         void test1() throws InterruptedException {
-            List<Ticket> tickets = ticketRepository.findAll();
-            System.out.println("tickets.size() = " + tickets.size());
-
-            // 하 대체 왜그러는거임?????????????????????????????????????????????????????????????????????????????????????????????
-            /////////////////////////////////////////////
-
-
-
-
             //given
-            Long showId = 4L;
+            Long showId = 3L;
             String seatSection = "B";
             Integer seatNumber = 221;
             String ticketCode = Ticket.makeCode(showId, seatSection, seatNumber);
@@ -139,10 +126,6 @@ class OrderServiceConcurrencyTest {
                     .code(ticketCode)
                     .build();
 
-            if (ticketRepository.findByCode(ticketCode).isPresent()) {
-                System.out.println("이미 존재해용");
-            }
-            
             ticketRepository.save(ticket);
             int threadCount = 25;
 
