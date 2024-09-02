@@ -78,7 +78,7 @@ public class Order extends BaseTimeEntity {
 
     public void cancel() {
         orderStatus = OrderStatus.CANCEL;
-        orderTickets.forEach(OrderTicket::cancel);
+        orderTickets.forEach(OrderTicket::makeAvailable);
     }
 
     public void refund() {

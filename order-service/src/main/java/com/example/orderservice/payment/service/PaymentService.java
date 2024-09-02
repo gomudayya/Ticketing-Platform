@@ -39,7 +39,7 @@ public class PaymentService {
                 .build();
 
         paymentRepository.save(payment);
-        order.isPaidBy(userId);
+        order.successBy(userId);
     }
 
     public void failPayment(Long userId, PaymentRequest paymentRequest) {

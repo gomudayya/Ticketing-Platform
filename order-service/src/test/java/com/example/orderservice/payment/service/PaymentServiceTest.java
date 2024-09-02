@@ -76,7 +76,7 @@ class PaymentServiceTest {
             paymentService.successPayment(userId, paymentRequest);
 
             //then
-            verify(order).isPaidBy(userId);  // times(1)과 동일
+            verify(order).successBy(userId);  // times(1)과 동일
             verify(paymentRepository, times(1)).save(any(Payment.class));
         }
     }

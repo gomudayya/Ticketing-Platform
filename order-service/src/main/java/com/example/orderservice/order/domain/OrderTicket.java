@@ -43,7 +43,7 @@ public class OrderTicket extends BaseTimeEntity {
         this.order = order;
     }
 
-    public void cancel() {
+    public void makeAvailable() {
         ticket.makeTicketAvailable();
     }
 
