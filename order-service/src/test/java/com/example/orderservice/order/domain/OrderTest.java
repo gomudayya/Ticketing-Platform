@@ -51,6 +51,27 @@ class OrderTest {
     }
 
 
+    @Test
+    @DisplayName("주문 환불 테스트")
+    void test5() {
+        //given
+        Long userId = 123L;
+        Ticket ticket1 = TicketFixture.createSelectedTicket(userId);
+        Ticket ticket2 = TicketFixture.createSelectedTicket(userId);;
 
+        OrderTicket orderTicket1 = OrderTicket.createOrderTicket(ticket1);
+        OrderTicket orderTicket2 = OrderTicket.createOrderTicket(ticket2);
 
+        Order order = Order.createOrder(userId, 123L, List.of(orderTicket1, orderTicket2));
+        order.successBy(123L);
+        //when
+        order.refund();
+
+        //then
+        assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.REFUND);
+        assertThat(ticket1.getTicketStatus()).isEqualTo(TicketStatus.AVAILABLE);
+        assertThat(ticket2.getTicketStatus()).isEqualTo(TicketStatus.AVAILABLE);
+        assertThat(ticket1.getUserId()).isEqualTo(null);
+        assertThat(ticket2.getUserId()).isEqualTo(null);
+    }
 }

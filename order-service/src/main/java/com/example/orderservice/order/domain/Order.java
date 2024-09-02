@@ -81,7 +81,12 @@ public class Order extends BaseTimeEntity {
         orderTickets.forEach(OrderTicket::cancel);
     }
 
-    public void isPaidBy(Long userId) {
+    public void refund() {
+        orderStatus = OrderStatus.REFUND;
+        orderTickets.forEach(OrderTicket::makeAvailable);
+    }
+
+    public void successBy(Long userId) {
         orderStatus = OrderStatus.SUCCESS;
         orderTickets.forEach(orderTicket -> orderTicket.isPaidBy(userId));
     }

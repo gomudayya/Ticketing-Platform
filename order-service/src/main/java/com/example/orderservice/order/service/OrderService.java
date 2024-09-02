@@ -104,7 +104,7 @@ public class OrderService {
         ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
         checkTicketSaleTime(show);
 
-        order.cancel();
+        order.refund();
         return OrderDetailsResponse.from(order, show);
     }
 
