@@ -29,6 +29,11 @@ public class TicketStatusRepository {
                 .entries(addPrefix(showId));
     }
 
+    public void changeTicketStatus(Long showId, String ticketCode, TicketStatus ticketStatus) {
+        template.opsForHash()
+                .put(addPrefix(showId), ticketCode, ticketStatus.name());
+    }
+
     public <T> T evalScript(RedisScript<T> redisScript, List<String> keys, Object[] args) {
         return template.execute(redisScript, addPrefix(keys), args);
     }

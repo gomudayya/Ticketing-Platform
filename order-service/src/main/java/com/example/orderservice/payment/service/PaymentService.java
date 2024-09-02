@@ -7,6 +7,8 @@ import com.example.orderservice.payment.domain.Payment;
 import com.example.orderservice.payment.dto.PaymentRequest;
 import com.example.orderservice.payment.exception.InvalidPaymentException;
 import com.example.orderservice.payment.repository.PaymentRepository;
+import com.example.orderservice.ticket.constant.TicketStatus;
+import com.example.orderservice.ticket.service.TicketCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final OrderService orderService;
+    private final TicketCacheService ticketCacheService;
     public void successPayment(Long userId, PaymentRequest paymentRequest) {
         Long orderId = paymentRequest.getOrderId();
 
@@ -51,6 +54,7 @@ public class PaymentService {
                 .paymentStatus(PaymentStatus.FAIL)
                 .build();
 
+        ticketCacheService.changeTicketStatus(order.getTickets(), TicketStatus.AVAILABLE);
         paymentRepository.save(payment);
     }
 }

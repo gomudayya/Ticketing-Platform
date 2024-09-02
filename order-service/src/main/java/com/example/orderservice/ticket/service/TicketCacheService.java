@@ -1,5 +1,6 @@
 package com.example.orderservice.ticket.service;
 
+import com.example.orderservice.ticket.constant.TicketStatus;
 import com.example.orderservice.ticket.domain.Ticket;
 import com.example.orderservice.ticket.repository.TicketRepository;
 import com.example.orderservice.ticket.repository.TicketStatusRepository;
@@ -67,5 +68,9 @@ public class TicketCacheService {
                 new ArrayList<>(List.of(showId.toString())),
                 ticketCodes.toArray()
         );
+    }
+
+    public void changeTicketStatus(List<Ticket> tickets, TicketStatus ticketStatus) {
+        tickets.forEach(ticket -> ticketStatusRepository.changeTicketStatus(ticket.getShowId(), ticket.getCode(), ticketStatus));
     }
 }

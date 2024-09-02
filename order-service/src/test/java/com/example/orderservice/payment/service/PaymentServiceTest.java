@@ -6,6 +6,8 @@ import com.example.orderservice.payment.domain.Payment;
 import com.example.orderservice.payment.dto.PaymentRequest;
 import com.example.orderservice.payment.exception.InvalidPaymentException;
 import com.example.orderservice.payment.repository.PaymentRepository;
+import com.example.orderservice.ticket.constant.TicketStatus;
+import com.example.orderservice.ticket.service.TicketCacheService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,9 @@ class PaymentServiceTest {
     OrderService orderService;
     @Mock
     PaymentRepository paymentRepository;
+
+    @Mock
+    TicketCacheService ticketCacheService;
     @InjectMocks
     PaymentService paymentService;
 
@@ -97,6 +102,7 @@ class PaymentServiceTest {
 
             //then
             verify(order).cancel();  // times(1)과 동일
+            verify(ticketCacheService).changeTicketStatus(order.getTickets(), TicketStatus.AVAILABLE);
         }
     }
 }
