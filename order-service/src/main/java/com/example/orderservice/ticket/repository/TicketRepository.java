@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface TicketRepository extends JpaRepository<Ticket, String>, TicketRepositoryQuerydsl {
+public interface TicketRepository extends JpaRepository<Ticket, Long>, TicketRepositoryQuerydsl {
 
     Optional<Ticket> findByCode(String code);
 
@@ -22,5 +22,4 @@ public interface TicketRepository extends JpaRepository<Ticket, String>, TicketR
     @Query("SELECT t FROM Ticket t WHERE t.code LIKE CONCAT(:showId, '\\_%') ESCAPE '\\'")
     List<Ticket> findTicketByShowId(@Param("showId") Long showId);
     List<Ticket> findByIdIn(List<Long> ticketIds);
-
 }
