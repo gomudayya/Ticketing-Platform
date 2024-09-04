@@ -15,4 +15,10 @@ public class Genre extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String genreName;
+
+    protected Genre() {}
+    public Genre(String genreName) {
+        this.genreName = genreName;
+    }
+
 }

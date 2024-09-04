@@ -2,21 +2,21 @@ package com.example.showservice.show.service;
 
 import com.example.servicecommon.exception.NotFoundException;
 import com.example.showservice.client.orderservice.OrderServiceClient;
+import com.example.showservice.client.orderservice.dto.TicketCreateRequest;
 import com.example.showservice.show.domain.Genre;
 import com.example.showservice.show.domain.Show;
-import com.example.showservice.venue.domain.Venue;
-import com.example.showservice.client.orderservice.dto.TicketCreateRequest;
-import com.example.showservice.show.dto.SeatPriceDto;
 import com.example.showservice.show.dto.SeatCountDto;
+import com.example.showservice.show.dto.SeatPriceDto;
 import com.example.showservice.show.dto.show.ShowCreateRequest;
 import com.example.showservice.show.dto.show.ShowDetailResponse;
 import com.example.showservice.show.dto.show.ShowSearchCondition;
 import com.example.showservice.show.dto.show.ShowSimpleResponse;
 import com.example.showservice.show.dto.show.ShowSliceResponse;
 import com.example.showservice.show.repository.GenreRepository;
+import com.example.showservice.show.repository.ShowRepository;
+import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.venue.exception.SeatSectionUnmatchedException;
 import com.example.showservice.venue.repository.SeatRepository;
-import com.example.showservice.show.repository.ShowRepository;
 import com.example.showservice.venue.repository.VenueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -104,6 +104,7 @@ public class ShowService {
         TicketCreateRequest ticketCreateRequest = new TicketCreateRequest(showId, seatInfos);
         orderServiceClient.createTicket(ticketCreateRequest);
     }
+
     private Show findShow(Long showId) {
         return showRepository.findById(showId)
                 .orElseThrow(() -> new NotFoundException("공연"));

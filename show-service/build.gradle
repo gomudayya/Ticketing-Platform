@@ -29,6 +29,13 @@ dependencies {
 
     //flyway
     implementation 'org.flywaydb:flyway-mysql'
+
+    //test DB
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.testcontainers:testcontainers' // for redis test
+
+    //kafka for test
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 def querydslSrcDir = 'src/main/generated'
