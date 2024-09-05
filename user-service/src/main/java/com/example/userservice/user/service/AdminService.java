@@ -6,6 +6,7 @@ import com.example.userservice.user.domain.User;
 import com.example.userservice.user.dto.AdminJoinRequest;
 import com.example.userservice.user.dto.UserInfoResponse;
 import com.example.userservice.user.exception.AdminKeyUnmatchedException;
+import com.example.userservice.user.exception.DuplicatedEmailException;
 import com.example.userservice.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,11 @@ public class AdminService {
     public UserInfoResponse adminJoin(AdminJoinRequest adminJoinRequest) {
         if (!adminJoinRequest.getAdminKey().equals(adminKey)) {
             throw new AdminKeyUnmatchedException();
+        }
+
+        String encodedEmail = AesUtil.encode(adminJoinRequest.getEmail());
+        if (userRepository.existsByEmail(encodedEmail)) {
+            throw new DuplicatedEmailException();
         }
 
         User user = User.builder()
