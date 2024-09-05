@@ -36,6 +36,7 @@ public enum ErrorCode {
 
     INVALID_PAYMENT(400, "결제 정보가 올바르지 않습니다."),
 
+    INVALID_REFUND(400, "환불이 불가능한 상태입니다.")
     ;
 
     private final int statusCode;

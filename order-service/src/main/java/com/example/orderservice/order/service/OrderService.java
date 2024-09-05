@@ -3,11 +3,13 @@ package com.example.orderservice.order.service;
 import com.example.orderservice.client.showservice.ShowServiceClient;
 import com.example.orderservice.client.showservice.dto.ShowSimpleResponse;
 import com.example.orderservice.client.showservice.dto.ShowStatus;
+import com.example.orderservice.order.constant.OrderStatus;
 import com.example.orderservice.order.domain.Order;
 import com.example.orderservice.order.domain.OrderTicket;
 import com.example.orderservice.order.dto.OrderDetailsResponse;
 import com.example.orderservice.order.dto.OrderPageResponse;
 import com.example.orderservice.order.dto.SeatDto;
+import com.example.orderservice.order.exception.InvalidRefundException;
 import com.example.orderservice.order.exception.TicketUnavailableException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
 import com.example.orderservice.order.repository.OrderRepository;
@@ -103,6 +105,11 @@ public class OrderService {
         Order order = findOrder(userId, orderId);
         ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
         checkTicketSaleTime(show);
+
+        if (order.getOrderStatus() != OrderStatus.SUCCESS) {
+            log.warn("주문 완료되지 않은 상품에 대한 환불 요청 발생 사용자 ID : {}, 주문 ID : {}", userId, orderId);
+            throw new InvalidRefundException("주문 완료된 상품만 환불 가능합니다.");
+        }
 
         order.refund();
         return OrderDetailsResponse.from(order, show);
