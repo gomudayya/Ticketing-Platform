@@ -3,6 +3,7 @@ package com.example.servicecommon.resolver;
 import com.example.servicecommon.auth.UserRole;
 import com.example.servicecommon.constant.CustomHeader;
 import com.example.servicecommon.dto.UserClaim;
+import com.example.servicecommon.exception.CustomAccessDeniedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class UserClaimArgumentResolver implements HandlerMethodArgumentResolver 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
         if (request.getHeader(CustomHeader.USER_ID) == null || request.getHeader(CustomHeader.USER_ROLE) == null) {
-            throw new IllegalStateException("userId가 null 이거나 userRole 이 null 입니다.");
+            throw new CustomAccessDeniedException();
         }
 
         Long userId = Long.valueOf(request.getHeader(CustomHeader.USER_ID));

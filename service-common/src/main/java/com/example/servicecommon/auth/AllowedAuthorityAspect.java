@@ -23,8 +23,9 @@ public class AllowedAuthorityAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
         String roleHeader = request.getHeader(CustomHeader.USER_ROLE);
-        if (roleHeader == null) {
-            log.info("Access denied: No role header found in the request.");
+        String userId = request.getHeader(CustomHeader.USER_ID);
+        if (roleHeader == null || userId == null) {
+            log.info("Access denied: Role header or user id is not found in the request.");
             throw new CustomAccessDeniedException();
         }
 
