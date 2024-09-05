@@ -48,8 +48,13 @@ git clone https://github.com/gomudayya/Ticketing-Platform.git
 
 ## API 명세
 
+[API 명세 바로가기!](https://documenter.getpostman.com/view/24242551/2sAXjQ19e4)
+
+(개인 포스트맨 Workspace에 임포트하면 손쉽게 사용 가능합니다)
+
 ## ERD
 
+![image](https://github.com/user-attachments/assets/53efc3e8-29b8-47ec-adea-923fb76faebb)
 
 ## 서비스 아키텍처
 
