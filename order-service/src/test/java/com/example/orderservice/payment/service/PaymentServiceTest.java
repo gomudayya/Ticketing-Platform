@@ -1,5 +1,6 @@
 package com.example.orderservice.payment.service;
 
+import com.example.orderservice.order.constant.OrderStatus;
 import com.example.orderservice.order.domain.Order;
 import com.example.orderservice.order.service.OrderService;
 import com.example.orderservice.payment.domain.Payment;
@@ -69,6 +70,7 @@ class PaymentServiceTest {
             PaymentRequest paymentRequest = new PaymentRequest(orderId, payAmount);
             Order order = mock(Order.class);
 
+            given(order.getOrderStatus()).willReturn(OrderStatus.PENDING);
             given(orderService.findOrder(userId, orderId)).willReturn(order);
             given(order.getTotalPrice()).willReturn(payAmount);
 
@@ -78,6 +80,25 @@ class PaymentServiceTest {
             //then
             verify(order).successBy(userId);  // times(1)과 동일
             verify(paymentRepository, times(1)).save(any(Payment.class));
+        }
+
+        @Test
+        @DisplayName("결제 요청으로 들어온 주문의 주문상태가 PENDING 상태가 아니라면 예외가 발생한다.")
+        void test3() {
+            //given
+            Long userId = 5L;
+            Long orderId = 21L;
+            int payAmount = 220_000;
+
+            Order order = mock(Order.class);
+            PaymentRequest paymentRequest = new PaymentRequest(orderId, payAmount);
+            given(orderService.findOrder(userId, orderId)).willReturn(order);
+            given(order.getTotalPrice()).willReturn(payAmount);
+            given(order.getOrderStatus()).willReturn(OrderStatus.SUCCESS);
+
+            //when, then
+            assertThatThrownBy(() -> paymentService.successPayment(userId, paymentRequest))
+                    .isInstanceOf(InvalidPaymentException.class);
         }
     }
 

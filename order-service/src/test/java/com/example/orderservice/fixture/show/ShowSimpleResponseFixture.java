@@ -33,4 +33,18 @@ public class ShowSimpleResponseFixture {
                 .showStatus(ShowStatus.BEFORE_TICKET_OPEN)
                 .build();
     }
+
+    public static ShowSimpleResponse createTicketSaleEndedShow() {
+        return ShowSimpleResponse.builder()
+                .showId(1L)
+                .genre("Drama")
+                .performer("John Doe")
+                .title("A Great Show")
+                .titleImage("http://example.com/image.jpg")
+                .ticketingTime(LocalDateTime.now().minusDays(1))
+                .startDate(LocalDateTime.now().plusDays(10))
+                .duration(120)
+                .showStatus(ShowStatus.TICKET_SALE_ENDED)
+                .build();
+    }
 }
