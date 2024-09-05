@@ -58,4 +58,4 @@ git clone https://github.com/gomudayya/Ticketing-Platform.git
 
 ## 서비스 아키텍처
 
-
+![ticket-land-architecture drawio (1)](https://github.com/user-attachments/assets/6d531065-3468-44bc-bff4-5ee17e62500b)
