@@ -1,6 +1,5 @@
 package com.example.showservice.generator;
 
-import com.example.showservice.show.domain.Genre;
 import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.venue.repository.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;

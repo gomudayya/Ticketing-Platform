@@ -1,10 +1,9 @@
 package com.example.showservice;
 
+import com.example.showservice.testutil.IntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ShowServiceApplicationTests {
+class ShowServiceApplicationTests extends IntegrationTest {
 
     @Test
     void contextLoads() {

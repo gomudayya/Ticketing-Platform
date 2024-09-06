@@ -1,16 +1,15 @@
 package com.example.showservice.show.service;
 
 import com.example.showservice.generator.ShowGenerator;
+import com.example.showservice.testutil.IntegrationTest;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.context.EmbeddedKafka;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +17,7 @@ import java.util.List;
 import static com.example.showservice.show.service.ShowSchedulerService.TICKET_OPEN_LOOKAHEAD_HOURS;
 import static com.example.showservice.show.service.ShowSchedulerService.UPCOMING_TICKET_OPEN_TOPIC;
 
-@SpringBootTest
-@EmbeddedKafka
-class ShowSchedulerServiceTest {
+class ShowSchedulerServiceTest extends IntegrationTest {
 
     @Autowired
     ShowSchedulerService showSchedulerService;

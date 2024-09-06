@@ -1,6 +1,6 @@
 package com.example.showservice.generator;
 
-import com.example.showservice.show.domain.Genre;
+import com.example.showservice.genre.domain.Genre;
 import com.example.showservice.show.domain.Show;
 import com.example.showservice.show.repository.ShowRepository;
 import com.example.showservice.venue.domain.Venue;

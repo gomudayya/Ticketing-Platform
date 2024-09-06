@@ -1,6 +1,6 @@
 package com.example.showservice.show.dto.show;
 
-import com.example.showservice.show.domain.Genre;
+import com.example.showservice.genre.domain.Genre;
 import com.example.showservice.show.domain.Show;
 import com.example.showservice.venue.domain.Venue;
 import com.example.showservice.show.dto.SeatPriceDto;

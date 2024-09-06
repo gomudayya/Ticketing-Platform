@@ -1,4 +1,4 @@
-package com.example.showservice.show.domain;
+package com.example.showservice.genre.domain;
 
 import com.example.showservice.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;
@@ -20,5 +20,4 @@ public class Genre extends BaseTimeEntity {
     public Genre(String genreName) {
         this.genreName = genreName;
     }
-
 }

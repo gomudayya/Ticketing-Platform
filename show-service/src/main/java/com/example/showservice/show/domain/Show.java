@@ -1,5 +1,6 @@
 package com.example.showservice.show.domain;
 
+import com.example.showservice.genre.domain.Genre;
 import com.example.showservice.global.domain.BaseTimeEntity;
 import com.example.showservice.show.constant.ShowStatus;
 import com.example.showservice.venue.domain.Venue;
