@@ -1,16 +1,16 @@
 package com.example.orderservice.fixture.ticket;
 
 import com.example.orderservice.ticket.domain.Ticket;
-import net.bytebuddy.utility.RandomString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TicketFixture {
 
     public static Ticket createSelectedTicket(Long userId) {
         Ticket ticket = Ticket.builder()
-                .code(RandomString.make(10))
+                .code(UUID.randomUUID().toString())
                 .price(123)
                 .build();
 

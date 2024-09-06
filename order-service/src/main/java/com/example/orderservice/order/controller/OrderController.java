@@ -54,6 +54,6 @@ public class OrderController {
     @AllowedAuthority(UserRole.Authority.USER)
     public ResponseEntity<OrderDetailsResponse> findOrderDetails(@AuthPrincipal UserClaim userClaim,
                                                                  @PathVariable Long orderId) {
-        return ResponseEntity.ok(orderService.readOrder(userClaim.getUserId(), orderId));
+        return ResponseEntity.ok(orderService.findMyOrder(userClaim.getUserId(), orderId));
     }
 }

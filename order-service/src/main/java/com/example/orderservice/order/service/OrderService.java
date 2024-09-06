@@ -85,22 +85,6 @@ public class OrderService {
         return ticketService.findTickets(ticketCodes); // 레디스에서 Race-Condition 제어를 마쳤으므로 락 없이 조회한다.
     }
 
-    @Transactional(readOnly = true)
-    public OrderDetailsResponse readOrder(Long userId, Long orderId) {
-        Order order = findOrder(userId, orderId);
-        ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
-        return OrderDetailsResponse.from(order, show);
-    }
-
-    @Transactional(readOnly = true)
-    public OrderPageResponse findMyOrders(Long userId, Pageable pageable) {
-        Page<Order> orderPage = orderRepository.findByUserId(userId, pageable);
-        List<Long> showIds = orderPage.getContent().stream().map(Order::getShowId).toList();
-        List<ShowSimpleResponse> shows = showServiceClient.getShows(showIds);
-
-        return OrderPageResponse.from(orderPage, shows);
-    }
-
     public OrderDetailsResponse refundOrder(Long userId, Long orderId) {
         Order order = findOrder(userId, orderId);
         ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
@@ -113,6 +97,26 @@ public class OrderService {
 
         order.refund();
         return OrderDetailsResponse.from(order, show);
+    }
+
+    @Transactional(readOnly = true)
+    public OrderDetailsResponse findMyOrder(Long userId, Long orderId) {
+        Order order = findOrder(userId, orderId);
+        if (order.getOrderStatus() == OrderStatus.PENDING || order.getOrderStatus() == OrderStatus.CANCEL) {
+            throw new CustomAccessDeniedException();
+        }
+
+        ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
+        return OrderDetailsResponse.from(order, show);
+    }
+
+    @Transactional(readOnly = true)
+    public OrderPageResponse findMyOrders(Long userId, Pageable pageable) {
+        Page<Order> orderPage = orderRepository.findByUserIdWithStatusFilter(userId, pageable, OrderStatus.PENDING, OrderStatus.CANCEL);
+        List<Long> showIds = orderPage.getContent().stream().map(Order::getShowId).toList();
+        List<ShowSimpleResponse> shows = showServiceClient.getShows(showIds);
+
+        return OrderPageResponse.from(orderPage, shows);
     }
 
     public Order findOrder(Long userId, Long orderId) {

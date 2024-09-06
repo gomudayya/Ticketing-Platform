@@ -1,6 +1,7 @@
 package com.example.orderservice.order.service;
 
 import com.example.orderservice.client.showservice.ShowServiceClient;
+import com.example.orderservice.order.constant.OrderStatus;
 import com.example.orderservice.order.domain.Order;
 import com.example.orderservice.order.exception.InvalidRefundException;
 import com.example.orderservice.order.exception.TicketSaleNotActiveException;
@@ -22,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
@@ -104,4 +104,41 @@ public class OrderServiceTest {
                 .isInstanceOf(CustomAccessDeniedException.class);
     }
 
+    @Nested
+    @DisplayName("주문 상세조회 테스트")
+    class readOrder {
+        @Test
+        @DisplayName("주문 상태가 PENDING 상태에 대한 주문에 대해 조회를 요청할 시 예외가 발생해야 한다.")
+        void test12512() {
+            //given
+            Long orderId = 1412L;
+            Long userId = 132L;
+
+            Order order = mock(Order.class);
+            given(orderRepository.findById(any())).willReturn(Optional.of(order));
+            given(order.isOwnedBy(userId)).willReturn(true);
+            given(order.getOrderStatus()).willReturn(OrderStatus.PENDING);
+
+            //when, then
+            assertThatThrownBy(() -> orderService.findMyOrder(userId, orderId))
+                    .isInstanceOf(CustomAccessDeniedException.class);
+        }
+
+        @Test
+        @DisplayName("주문 상태가 CANCEL 상태에 대한 주문에 대해 조회를 요청할 시 예외가 발생해야 한다.")
+        void test143() {
+            //given
+            Long orderId = 1412L;
+            Long userId = 132L;
+
+            Order order = mock(Order.class);
+            given(orderRepository.findById(any())).willReturn(Optional.of(order));
+            given(order.isOwnedBy(userId)).willReturn(true);
+            given(order.getOrderStatus()).willReturn(OrderStatus.CANCEL);
+
+            //when, then
+            assertThatThrownBy(() -> orderService.findMyOrder(userId, orderId))
+                    .isInstanceOf(CustomAccessDeniedException.class);
+        }
+    }
 }
