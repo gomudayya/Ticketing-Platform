@@ -56,10 +56,12 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     ports:
       - "9092:9092"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
 
 
 volumes:
   user-data:
   show-data:
   order-data:
-  kafka-volume:
+  kafka_data:
