@@ -6,6 +6,7 @@ import com.example.userservice.client.showservice.ShowServiceClient;
 import com.example.userservice.client.showservice.dto.ShowSimpleResponse;
 import com.example.userservice.user.domain.User;
 import com.example.userservice.user.service.UserService;
+import com.example.userservice.wishlist.exception.DuplicatedWishlistItemException;
 import com.example.userservice.wishlist.repository.WishlistRepository;
 import com.example.userservice.wishlist.domain.Wishlist;
 import com.example.userservice.wishlist.dto.WishlistPageResponse;
@@ -33,6 +34,10 @@ public class WishlistService {
                 .user(user)
                 .showId(findShow.getShowId())
                 .build();
+
+        if (wishlistRepository.existsByUserIdAndShowId(userId, showId)) {
+            throw new DuplicatedWishlistItemException();
+        }
 
         wishlistRepository.save(wishlist);
         return WishlistResponse.from(wishlist, findShow);

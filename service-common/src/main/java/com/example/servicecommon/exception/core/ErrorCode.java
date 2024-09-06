@@ -22,6 +22,8 @@ public enum ErrorCode {
 
     DUPLICATED_EMAIL(409, "이미 가입된 이메일입니다."),
 
+    DUPLICATE_WISHLIST_ITEM(409, "이미 위시리스트에 등록된 공연입니다."),
+
     NOT_FOUND(404, "해당 %s을 찾을 수 없습니다."),
 
     ACCESS_DENIED(403, "권한이 부족합니다."),
