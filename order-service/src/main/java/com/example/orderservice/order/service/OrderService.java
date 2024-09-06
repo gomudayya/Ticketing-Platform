@@ -87,14 +87,13 @@ public class OrderService {
 
     public OrderDetailsResponse refundOrder(Long userId, Long orderId) {
         Order order = findOrder(userId, orderId);
-        ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
-        checkTicketSaleTime(show);
-
         if (order.getOrderStatus() != OrderStatus.SUCCESS) {
             log.warn("주문 완료되지 않은 상품에 대한 환불 요청 발생 사용자 ID : {}, 주문 ID : {}", userId, orderId);
             throw new InvalidRefundException("주문 완료된 상품만 환불 가능합니다.");
         }
 
+        ShowSimpleResponse show = showServiceClient.getShow(order.getShowId());
+        checkTicketSaleTime(show);
         order.refund();
         return OrderDetailsResponse.from(order, show);
     }

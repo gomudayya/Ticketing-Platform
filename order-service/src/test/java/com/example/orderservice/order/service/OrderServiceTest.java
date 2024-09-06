@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
@@ -79,6 +80,10 @@ public class OrderServiceTest {
             //given
             Long userId = 22L;
             Long orderId = 1131L;
+
+            Order order = mock(Order.class);
+            when(order.isOwnedBy(userId)).thenReturn(true);
+            when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
 
             //when, then
