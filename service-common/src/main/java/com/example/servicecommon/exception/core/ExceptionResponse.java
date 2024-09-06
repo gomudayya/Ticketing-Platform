@@ -1,19 +1,25 @@
 package com.example.servicecommon.exception.core;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.nio.ByteBuffer;
 
 @Getter
+@NoArgsConstructor
+@Setter
 public class ExceptionResponse {
     private Integer statusCode;
     private String errorCode;
     private String msg;
 
-    public ExceptionResponse(ErrorCode errorCode) {
+    private ExceptionResponse(ErrorCode errorCode) {
         this.statusCode = errorCode.getStatusCode();
         this.errorCode = errorCode.name();
         this.msg = errorCode.getMsg();
     }
-    private ExceptionResponse(Integer statusCode, String errorCode, String msg) {
+    public ExceptionResponse(Integer statusCode, String errorCode, String msg) {
         this.statusCode = statusCode;
         this.errorCode = errorCode;
         this.msg = msg;
