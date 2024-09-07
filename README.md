@@ -59,3 +59,15 @@ git clone https://github.com/gomudayya/Ticketing-Platform.git
 ## 서비스 아키텍처
 
 ![ticket-land-architecture drawio (1)](https://github.com/user-attachments/assets/6d531065-3468-44bc-bff4-5ee17e62500b)
+
+## Wiki
+
+**[ STUDY ]**
+
+- [Redis를 이용해 동시성 제어하기](https://github.com/gomudayya/Ticketing-Platform/wiki/Redis%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%B4%20%EB%8F%99%EC%8B%9C%EC%84%B1%20%EC%A0%9C%EC%96%B4%ED%95%98%EA%B8%B0)
+
+**[Trouble Shooting]** 
+
+- [티켓팅 시나리오에 대한 부하테스트 및 성능개선](https://github.com/gomudayya/Ticketing-Platform/wiki/Redis%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%B4%20%EB%8F%99%EC%8B%9C%EC%84%B1%20%EC%A0%9C%EC%96%B4%ED%95%98%EA%B8%B0)
+
+
